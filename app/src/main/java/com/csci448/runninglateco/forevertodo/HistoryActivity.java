@@ -16,3 +16,6 @@ public class HistoryActivity extends AppCompatActivity {
 //TODO: set up the views for the text about the completion statistics
 //TODO: create the scrolling fragment for recently completed tasks
 //TODO: toolbar???????
+//TODO: implement Navigation Drawer????
+
+//TODO: should this be a SingleFragmentActivity or something else??

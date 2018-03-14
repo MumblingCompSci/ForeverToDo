@@ -1,14 +1,15 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends SingleFragmentActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
+    protected Fragment createFragment() {
+        return TaskListFragment.newInstance();
     }
 }
 
@@ -22,3 +23,4 @@ public class TaskListActivity extends AppCompatActivity {
 //TODO: set up TaskActivity to "be a child" of TaskListActivity so that the up button takes it back
 
 //TODO: set up a landscape view for TaskListActivity that shows the list and the details like CriminalActivity did
+//TODO: implement a NavigationDrawer????
