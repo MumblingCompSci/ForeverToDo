@@ -34,8 +34,7 @@ public class ProfileFragment extends Fragment {
         mPasswordChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Goes to new password page", Toast.LENGTH_SHORT);
-                toast.show();
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container)
             }
         });
 
