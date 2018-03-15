@@ -27,11 +27,19 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         mProfilePic = (ImageView) v.findViewById(R.id.profile_pic);
+        mProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(), "Edit your profile picture", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
         mUserName = (TextView) v.findViewById(R.id.username);
 
         mPasswordChange = (TextView) v.findViewById(R.id.change_password_link);
         mPasswordChange.setOnClickListener(new View.OnClickListener() {
+            //brings up a PasswordResetFragment
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PasswordResetFragment()).commit();
@@ -72,7 +80,8 @@ public class ProfileFragment extends Fragment {
         mSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Signing out", Toast.LENGTH_SHORT);
+                //TODO: Decide on where we really want to go when user signs out
+                Toast toast = Toast.makeText(getContext(), "Goes to login page", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

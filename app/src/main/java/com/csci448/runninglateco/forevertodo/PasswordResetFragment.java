@@ -32,8 +32,9 @@ public class PasswordResetFragment extends Fragment {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getContext(), "Goes to Login page", Toast.LENGTH_SHORT);
-                toast.show();
+                //returns to profile screen
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+
             }
         });
 

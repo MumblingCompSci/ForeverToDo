@@ -43,7 +43,8 @@ public class SignUpFragment extends Fragment {
         mSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast toast = Toast.makeText(getContext(), "You're signed up!", Toast.LENGTH_SHORT);
+                //TODO: Send an intent to start TaskListActivity or Kill LoginActivity to return to TaskListActivity
+                Toast toast = Toast.makeText(getContext(), "Goes to TaskList view", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

@@ -32,7 +32,8 @@ public class LoginFragment extends Fragment {
         mSignIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast toast = Toast.makeText(getContext(), "You've signed in", Toast.LENGTH_SHORT);
+                //TODO: Start TaskListActivity or Kill LoginActivity to return to TaskListActivity
+                Toast toast = Toast.makeText(getContext(), "Goes to TaskList view", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

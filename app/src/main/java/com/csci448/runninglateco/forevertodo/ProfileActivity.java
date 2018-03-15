@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 public class ProfileActivity extends AppCompatActivity{
 
-
+    //inflates a ProfileFragment
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
