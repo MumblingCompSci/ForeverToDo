@@ -41,8 +41,7 @@ public class LoginFragment extends Fragment {
         signUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast toast = Toast.makeText(getContext(), "Switches to Sign up page", Toast.LENGTH_SHORT);
-                toast.show();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SignUpFragment()).commit();
             }
         });
 
