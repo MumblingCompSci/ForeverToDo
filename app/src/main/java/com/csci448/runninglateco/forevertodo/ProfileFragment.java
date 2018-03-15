@@ -1,0 +1,83 @@
+package com.csci448.runninglateco.forevertodo;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+/**
+ * Created by tkarol on 3/15/18.
+ */
+
+public class ProfileFragment extends Fragment {
+    private ImageView mProfilePic;
+    private TextView mUserName;
+    private TextView mPasswordChange;
+    private Switch mNotificationSwitch;
+    private Switch mAlarmSwitch;
+    private TextView mSignOut;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        mProfilePic = (ImageView) v.findViewById(R.id.profile_pic);
+
+        mUserName = (TextView) v.findViewById(R.id.username);
+
+        mPasswordChange = (TextView) v.findViewById(R.id.change_password_link);
+        mPasswordChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(), "Goes to new password page", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        mNotificationSwitch = (Switch) v.findViewById(R.id.notification_switch);
+        mNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast toast;
+                if(mNotificationSwitch.isChecked()) {
+                    toast = Toast.makeText(getContext(), "Notifications turned on", Toast.LENGTH_SHORT);
+                }
+                else{
+                    toast = Toast.makeText(getContext(), "Notifications turned off", Toast.LENGTH_SHORT);
+                }
+                toast.show();
+            }
+        });
+
+        mAlarmSwitch = (Switch) v.findViewById(R.id.alarm_switch);
+        mAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast toast;
+                if(mAlarmSwitch.isChecked()) {
+                    toast = Toast.makeText(getContext(), "Alarms turned on", Toast.LENGTH_SHORT);
+                }
+                else{
+                    toast = Toast.makeText(getContext(), "Alarms turned off", Toast.LENGTH_SHORT);
+                }
+                toast.show();
+            }
+        });
+
+        mSignOut = (TextView) v.findViewById(R.id.sign_out_link);
+        mSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(), "Signing out", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        return v;
+    }
+}

@@ -15,32 +15,32 @@ import android.widget.Toast;
  */
 
 public class SignUpFragment extends Fragment {
-    private EditText user;
-    private EditText password;
-    private EditText passwordConfirm;
-    private EditText email;
-    private EditText phone;
-    private CheckBox terms;
-    private Button submit;
+    private EditText mUser;
+    private EditText mPassword;
+    private EditText mPasswordConfirm;
+    private EditText mEmail;
+    private EditText mPhone;
+    private CheckBox mTerms;
+    private Button mSubmit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        user = (EditText) v.findViewById(R.id.username_entry);
+        mUser = (EditText) v.findViewById(R.id.username_entry);
 
-        password = (EditText) v.findViewById(R.id.password_entry);
+        mPassword = (EditText) v.findViewById(R.id.password_entry);
 
-        passwordConfirm = (EditText) v.findViewById(R.id.password_confirm);
+        mPasswordConfirm = (EditText) v.findViewById(R.id.password_confirm);
 
-        email = (EditText) v.findViewById(R.id.email_entry);
+        mEmail = (EditText) v.findViewById(R.id.email_entry);
 
-        phone = (EditText) v.findViewById(R.id.phone_entry);
+        mPhone = (EditText) v.findViewById(R.id.phone_entry);
 
-        terms = (CheckBox) v.findViewById(R.id.terms);
+        mTerms = (CheckBox) v.findViewById(R.id.terms);
 
-        submit = (Button) v.findViewById(R.id.submit_button);
-        submit.setOnClickListener(new View.OnClickListener(){
+        mSubmit = (Button) v.findViewById(R.id.submit_button);
+        mSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Toast toast = Toast.makeText(getContext(), "You're signed up!", Toast.LENGTH_SHORT);

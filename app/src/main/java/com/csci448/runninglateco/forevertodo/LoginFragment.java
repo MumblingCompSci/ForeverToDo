@@ -16,20 +16,20 @@ import android.widget.Toast;
  */
 
 public class LoginFragment extends Fragment {
-    private EditText user;
-    private EditText password;
-    private Button signIn;
-    private TextView signUp;
+    private EditText mUser;
+    private EditText mPassword;
+    private Button mSignIn;
+    private TextView mSignUp;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        user = (EditText) v.findViewById(R.id.username_entry);
+        mUser = (EditText) v.findViewById(R.id.username_entry);
 
-        password = (EditText) v.findViewById(R.id.password_entry);
+        mPassword = (EditText) v.findViewById(R.id.password_entry);
 
-        signIn = (Button) v.findViewById(R.id.submit_button);
-        signIn.setOnClickListener(new View.OnClickListener(){
+        mSignIn = (Button) v.findViewById(R.id.submit_button);
+        mSignIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Toast toast = Toast.makeText(getContext(), "You've signed in", Toast.LENGTH_SHORT);
@@ -37,8 +37,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        signUp = (TextView) v.findViewById(R.id.sign_up_link);
-        signUp.setOnClickListener(new View.OnClickListener(){
+        mSignUp = (TextView) v.findViewById(R.id.sign_up_link);
+        mSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SignUpFragment()).commit();
