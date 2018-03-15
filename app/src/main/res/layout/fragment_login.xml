@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
+        android:layout_marginRight="40dp"
+        android:id="@+id/username_entry"/>
 
         <TextView
             android:layout_marginLeft="20dp"
@@ -37,13 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"/>
+            android:layout_marginRight="40dp"
+            android:id="@+id/password_entry"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign In"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:id="@+id/submit_button"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +54,7 @@
         android:textStyle="bold"
         android:textSize="15dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:id="@+id/sign_up_link"/>
 
 </LinearLayout>
