@@ -18,7 +18,7 @@ public class ToDoTask {
         mId = UUID.randomUUID();
     }
 
-    public UUID getId() { return mId; }
+    public  UUID getId() { return mId; }
 
     public String getTitle() {
         return mTitle;
