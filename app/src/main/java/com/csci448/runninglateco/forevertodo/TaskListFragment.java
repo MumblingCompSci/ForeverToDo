@@ -44,7 +44,7 @@ public class TaskListFragment extends Fragment {
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startHistory = new Intent(getActivity(), HistoryActivity.class);
+                Intent startHistory = new Intent(getActivity(), MainActivity.class);
                 (getActivity()).startActivity(startHistory);
             }
         });
