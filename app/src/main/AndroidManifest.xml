@@ -16,11 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskActivity"
-            android:parentActivityName=".TaskListActivity"/>
-        <activity android:name=".HistoryActivity" />
+        <activity
+            android:name=".TaskActivity"
+            android:parentActivityName=".TaskListActivity" />
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".TaskListActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

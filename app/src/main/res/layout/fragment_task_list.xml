@@ -17,4 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/to_task"/>
+    <Button
+        android:id="@+id/to_history_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_history"/>
 </LinearLayout>

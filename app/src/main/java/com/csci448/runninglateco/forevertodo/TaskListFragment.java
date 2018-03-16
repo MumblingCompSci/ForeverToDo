@@ -26,6 +26,7 @@ public class TaskListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
 
     private Button mTaskButton;
+    private Button mHistoryButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
@@ -37,6 +38,14 @@ public class TaskListFragment extends Fragment {
             public void onClick(View view) {
                 ToDoTask testTask = new ToDoTask();
                 ((TaskListActivity) getActivity()).onTaskSelected(testTask);
+            }
+        });
+        mHistoryButton = (Button) view.findViewById(R.id.to_history_button);
+        mHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startHistory = new Intent(getActivity(), HistoryActivity.class);
+                (getActivity()).startActivity(startHistory);
             }
         });
 

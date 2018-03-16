@@ -1,5 +1,7 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -9,6 +11,20 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment graphFragment = fm.findFragmentById(R.id.graph_frame);
+        Fragment completedFragment = fm.findFragmentById(R.id.completed_frame);
+        if (graphFragment == null) {
+            graphFragment = new     GraphFragment();
+        }
+        if (completedFragment == null) {
+            completedFragment = new CompletedFragment();
+        }
+        fm.beginTransaction()
+                .replace(R.id.graph_frame, graphFragment)
+                .replace(R.id.completed_frame, completedFragment)
+                .commit();
     }
 }
 
