@@ -2,4 +2,9 @@
     <string name="app_name">ForeverToDo</string>
 
     <string name="new_task">New ToDo</string>
+
+    <!-- Testing Strings -->
+    <string name="task_list">This is the task list page!</string>
+    <string name="to_task">To task page</string>
+    <string name="task_page">This is the individual task page!</string>
 </resources>

@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TaskListActivity extends SingleFragmentActivity {
+public class TaskListActivity extends SingleFragmentActivity
+    implements TaskListFragment.Callbacks{
     @Override
     protected Fragment createFragment() {
         return TaskListFragment.newInstance();
@@ -14,6 +15,7 @@ public class TaskListActivity extends SingleFragmentActivity {
     @Override
     protected int getLayoutResId() { return R.layout.activity_masterdetail; }
 
+    @Override
     public void onTaskSelected(ToDoTask task){
         if (findViewById(R.id.detail_fragment_container) == null) {
             Intent intent = TaskActivity.newIntent(this, task.getId());
