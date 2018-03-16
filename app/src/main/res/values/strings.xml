@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ForeverToDo</string>
+
+    <string name="new_task">New ToDo</string>
 </resources>
