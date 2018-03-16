@@ -1,16 +1,24 @@
 package com.csci448.runninglateco.forevertodo;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by quintero on 3/15/18.
  */
 
 public class ToDoTask {
+    private UUID mId;
     private String mTitle;
     private String mDescription;
     private Date mDueDate;
     private Date mCompleteDate;
+
+    public ToDoTask() {
+        mId = UUID.randomUUID();
+    }
+
+    public UUID getId() { return mId; }
 
     public String getTitle() {
         return mTitle;
