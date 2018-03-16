@@ -1,7 +1,18 @@
 <resources>
     <string name="app_name">ForeverToDo</string>
 
+    <!-- Task strings -->
     <string name="new_task">New ToDo</string>
+    <string name="task_name">Task Name</string>
+    <string name="due_date">Due Date</string>
+    <string name="select_date">Select Date...</string>
+    <string name="due_time">Time</string>
+    <string name="select_time">Select Time...</string>
+    <string name="description">Description</string>
+    <string name="priority_level">Priority Level</string>
+    <string name="category_box">Category</string>
+    <string name="notif_string">Notifications</string>
+    <string name="alarm_string">Alarm</string>
 
     <!-- Testing Strings -->
     <string name="task_list">This is the task list page!</string>
