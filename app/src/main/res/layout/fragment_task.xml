@@ -4,6 +4,154 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="@string/task_name"/>
+        <EditText
+            android:id="@+id/task_name"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/due_date"/>
+        <EditText
+            android:id="@+id/task_due_date"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/select_date"
+            android:padding="10dp"
+            android:background="#efefef"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/due_time"/>
+        <EditText
+            android:id="@+id/task_due_time"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/select_time"
+            android:padding="10dp"
+            android:background="#efefef"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/description"/>
+        <EditText
+            android:id="@+id/task_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/edit_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/priority_level"/>
+        <SeekBar
+            android:id="@+id/task_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:maxHeight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:max="10"
+            android:progress="5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/category_box"/>
+        <Spinner
+            android:id="@+id/task_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/notif_string"/>
+        <EditText
+            android:id="@+id/task_notifs"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/notif_temp"
+            android:padding="10dp"
+            android:background="#efefef"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/alarm_string"/>
+        <EditText
+            android:id="@+id/task_alarms"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/alarm_temp"
+            android:padding="10dp"
+            android:background="#efefef" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="25dp">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="25dp"
+                android:text="@string/cancel_button"/>
+
+            <Button
+                android:id="@+id/done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/done_button"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:layout_gravity="center"
     android:background="@android:color/white">
 
@@ -13,7 +161,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/task_name"
+            android:id="@+id/task_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
@@ -27,7 +175,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/due_date"/>
         <TextView
-            android:id="@+id/task_due_date"
+            android:id="@+id/task_due_date_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:padding="8dp"
@@ -42,7 +190,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/due_time"/>
         <TextView
-            android:id="@+id/task_due_time"
+            android:id="@+id/task_due_time_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:padding="8dp"
@@ -57,7 +205,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/description"/>
         <TextView
-            android:id="@+id/task_description"
+            android:id="@+id/task_description_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/edit_text"
@@ -71,6 +219,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/priority_level"/>
         <TextView
+            android:id="@+id/priority_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
@@ -83,6 +232,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/category_box"/>
         <TextView
+            android:id="@+id/category_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
@@ -95,7 +245,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/notif_string"/>
         <TextView
-            android:id="@+id/task_notifs"
+            android:id="@+id/task_notifs_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textSize="15dp"
@@ -111,7 +261,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/alarm_string"/>
         <TextView
-            android:id="@+id/task_alarms"
+            android:id="@+id/task_alarms_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="@string/alarm_temp"
@@ -147,4 +297,4 @@
 
 
 
-</ScrollView>
+</ScrollView> -->
