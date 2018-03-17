@@ -33,7 +33,7 @@
     <string name="to_task">To task page</string>
     <string name="task_page">This is the individual task page!</string>
     <string name="to_history">To history</string>
-    <string name="completed_text">This is the completed activities fragment</string>
+    <string name="completed_text">Completed Tasks!</string>
     <string name="graph_text">This picture will eventually become a graph that is generated based on the number of tasks completed in the last seven days.</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="to_profile">To profile</string>
