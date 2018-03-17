@@ -56,5 +56,13 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:id="@+id/sign_up_link"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Force Crash!"
+        android:onClick="forceCrash"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/crash"/>
 
 </LinearLayout>

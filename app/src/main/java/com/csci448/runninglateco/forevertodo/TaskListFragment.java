@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by quintero on 3/14/18.
@@ -28,32 +30,25 @@ public class TaskListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
-    private Button mTaskButton;
-    private Button mHistoryButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+
+        List<ToDoTask>tasks = new ArrayList<>();
+        Random rand = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            ToDoTask task = new ToDoTask();
+            task.setTitle(Integer.toString(rand.nextInt()));
+            task.setDescription("I'm a description! :)");
+            tasks.add(task);
+        }
+        mTaskAdapter = new TaskAdapter(tasks);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
+        mRecyclerView.setAdapter(mTaskAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        mTaskButton = (Button) view.findViewById(R.id.to_task_button);
-//        mTaskButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ToDoTask testTask = new ToDoTask();
-//                ((TaskListActivity) getActivity()).onTaskSelected(testTask);
-//            }
-//        });
-//        mHistoryButton = (Button) view.findViewById(R.id.to_history_button);
-//        mHistoryButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent startHistory = new Intent(getActivity(), HistoryActivity.class);
-//                (getActivity()).startActivity(startHistory);
-//            }
-//        });
-
 
         return view;
     }
@@ -81,7 +76,19 @@ public class TaskListFragment extends Fragment {
         public void bind(ToDoTask task) {
             mTask = task;
             mTitleTextView.setText(mTask.getTitle());
+            mTitleTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((TaskListActivity) getActivity()).onTaskSelected(mTask);
+                }
+            });
             mDateTextView.setText(mTask.getCompleteDate().toString());
+            mDateTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((TaskListActivity) getActivity()).onTaskSelected(mTask);
+                }
+            });
         }
 
         @Override
