@@ -1,5 +1,6 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -34,8 +35,11 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view){
                 //TODO: Start TaskListActivity or Kill LoginActivity to return to TaskListActivity
-                Toast toast = Toast.makeText(getContext(), "Goes to TaskList view", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent goofProfile = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(goofProfile);
+
+                /*Toast toast = Toast.makeText(getContext(), "Goes to TaskList view", Toast.LENGTH_SHORT);
+                toast.show();*/
             }
         });
 
