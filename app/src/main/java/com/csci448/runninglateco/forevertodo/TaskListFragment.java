@@ -34,9 +34,10 @@ public class TaskListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+        TaskCollector taskCollector = TaskCollector.get(getActivity());
+        List<ToDoTask> tasks = taskCollector.getTasks();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 //        mTaskButton = (Button) view.findViewById(R.id.to_task_button);
 //        mTaskButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -81,7 +82,7 @@ public class TaskListFragment extends Fragment {
         public void bind(ToDoTask task) {
             mTask = task;
             mTitleTextView.setText(mTask.getTitle());
-            mDateTextView.setText(mTask.getCompleteDate().toString());
+            mDateTextView.setText(mTask.getDueDate().toString());
         }
 
         @Override
