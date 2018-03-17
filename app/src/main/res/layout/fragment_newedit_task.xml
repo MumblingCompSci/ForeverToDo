@@ -73,7 +73,7 @@
             android:minHeight="10dp"
             android:maxHeight="10dp"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="right"
+            android:layout_gravity="center"
             android:max="10"
             android:progress="5"/>
 
@@ -116,9 +116,13 @@
             android:padding="10dp"
             android:background="#efefef" />
 
-
-
-
+        <Button
+            android:id="@+id/done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:text="@string/done_button"/>
 
     </LinearLayout>
 

@@ -5,15 +5,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import java.util.UUID;
 
-/**
+/*
  * Created by Clara on 3/16/2018.
  */
 
 public class EditNewTaskFragment extends Fragment {
+
+    private EditText mTaskName;
+    private EditText mDueDate;
+    private EditText mDueTime;
+    private EditText mDescription;
+    private SeekBar mPriorityLvl;
+    private Spinner mCategory;
+    private EditText mNotifs;
+    private EditText mAlarms;
+    private Button mDoneButton;
 
     @Override
     public void onCreate(Bundle savedInstance) {

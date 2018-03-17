@@ -5,6 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.UUID;
 
@@ -13,6 +18,17 @@ import java.util.UUID;
  */
 
 public class TaskFragment extends Fragment {
+
+    private TextView mTaskName;
+    private TextView mDueDate;
+    private TextView mDueTime;
+    private TextView mDescription;
+    private SeekBar mPriorityLvl;
+    private Spinner mCategory;
+    private TextView mNotifs;
+    private TextView mAlarms;
+    private Button mCancelButton;
+    private Button mDoneButton;
 
     public interface Callbacks {
         void onTaskUpdated(ToDoTask task);
