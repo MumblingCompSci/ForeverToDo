@@ -12,7 +12,11 @@
     <string name="priority_level">Priority Level</string>
     <string name="category_box">Category</string>
     <string name="notif_string">Notifications</string>
+    <string name="notif_format">%1$d/%2$d/%3$d    %4$d:%5$d %1$s</string>
+    <string name="notif_temp">12/01/2018    08:00 AM</string>
     <string name="alarm_string">Alarm</string>
+    <string name="alarm_format">%4$d:%5$d %1$s</string>
+    <string name="alarm_temp">09:00 AM</string>
 
     <!-- Testing Strings -->
     <string name="task_list">This is the task list page!</string>
