@@ -12,7 +12,7 @@ public class ToDoTask {
     private String mTitle;
     private String mDescription;
     private Date mDueDate;
-    private Date mCompleteDate;
+    private Date mCompleteDate = new Date();
 
     public ToDoTask() {
         mId = UUID.randomUUID();
