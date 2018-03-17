@@ -10,24 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
+        </activity>
+        <activity
+            android:name=".TaskActivity"
+            android:parentActivityName=".TaskListActivity" >
+        </activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".TaskListActivity" />
+        <activity android:name=".TaskListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".TaskActivity"
-            android:parentActivityName=".TaskListActivity" />
-        <activity
-            android:name=".HistoryActivity"
-            android:parentActivityName=".TaskListActivity" />
-        <activity android:name=".TaskListActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="b6fead2dff288a8ce8129971ddb5c6073fc68515"

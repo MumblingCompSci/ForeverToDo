@@ -79,6 +79,7 @@ public class TaskFragment extends Fragment {
         mAlarms = (EditText) view.findViewById(R.id.task_alarms);
         mAlarms.setEnabled(false);
 
+        Toast.makeText(getActivity(), "These fields will be populated by the Task data. For now, they don't do anything.  Pressing save will eventually record the data.", Toast.LENGTH_LONG).show();
 
         return view;
     }
@@ -94,7 +95,7 @@ public class TaskFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.edit_save:
                 mInEdit = !mInEdit;
-                updateTaskItems();
+                updateTaskItems(item);
 
                 return true;
             default:
@@ -102,19 +103,19 @@ public class TaskFragment extends Fragment {
         }
     }
 
-    private void updateTaskItems() {
+    private void updateTaskItems(MenuItem item) {
         String subtitle;
 
         if (mInEdit) {
             subtitle = "Save";
             enableItems();
             AppCompatActivity activity = (AppCompatActivity) getActivity();
-            activity.getSupportActionBar().setTitle(subtitle);
+            item.setTitle(subtitle);
         } else {
             subtitle = "Edit";
             disableItems();
             AppCompatActivity activity = (AppCompatActivity) getActivity();
-            activity.getSupportActionBar().setTitle(subtitle);
+            item.setTitle(subtitle);
         }
     }
 
