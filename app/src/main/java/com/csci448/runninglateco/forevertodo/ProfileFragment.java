@@ -1,5 +1,6 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -81,8 +82,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO: Decide on where we really want to go when user signs out
-                Toast toast = Toast.makeText(getContext(), "Goes to login page", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent toSignIn = new Intent(getActivity(), LoginActivity.class);
+                startActivity(toSignIn);
+
+                /*Toast toast = Toast.makeText(getContext(), "Goes to login page", Toast.LENGTH_SHORT);
+                toast.show();*/
             }
         });
 

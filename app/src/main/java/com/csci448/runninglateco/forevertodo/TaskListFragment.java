@@ -34,6 +34,12 @@ public class TaskListFragment extends Fragment {
     private Button toHistory;
 
     @Override
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
@@ -70,6 +76,24 @@ public class TaskListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_task_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.new_task:
+                Toast.makeText(getContext(), "This would normally open a blank \"template\" to fill in to create a new task.", Toast.LENGTH_LONG)
+                .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public interface Callbacks {
