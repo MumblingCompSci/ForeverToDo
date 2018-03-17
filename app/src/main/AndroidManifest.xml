@@ -26,7 +26,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".TaskListActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

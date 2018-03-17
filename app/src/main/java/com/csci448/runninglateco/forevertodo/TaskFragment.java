@@ -60,9 +60,27 @@ public class TaskFragment extends Fragment {
 
         mDueDate = (EditText) view.findViewById(R.id.task_due_date);
         mDueDate.setEnabled(false);
+        mDueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toastie = Toast.makeText(getContext(),
+                        "A DatePickerDialog will pull up for user to set the date with",
+                        Toast.LENGTH_SHORT);
+                toastie.show();
+            }
+        });
 
         mDueTime = (EditText) view.findViewById(R.id.task_due_time);
         mDueTime.setEnabled(false);
+        mDueTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toastie = Toast.makeText(getContext(),
+                        "A TimePickerDialog will pull up for user to set the time with",
+                        Toast.LENGTH_SHORT);
+                toastie.show();
+            }
+        });
 
         mDescription = (EditText) view.findViewById(R.id.task_description);
         mDescription.setEnabled(false);
@@ -75,11 +93,31 @@ public class TaskFragment extends Fragment {
 
         mNotifs = (EditText) view.findViewById(R.id.task_notifs);
         mNotifs.setEnabled(false);
+        mNotifs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toastie = Toast.makeText(getContext(),
+                        "A new notification settings will pop up",
+                        Toast.LENGTH_SHORT);
+                toastie.show();
+            }
+        });
 
         mAlarms = (EditText) view.findViewById(R.id.task_alarms);
         mAlarms.setEnabled(false);
+        mAlarms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toastie = Toast.makeText(getContext(),
+                        "An alarm setup will pop up",
+                        Toast.LENGTH_SHORT);
+                toastie.show();
+            }
+        });
 
-        Toast.makeText(getActivity(), "These fields will be populated by the Task data. For now, they don't do anything.  Pressing save will eventually record the data.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),
+                "These fields will be populated by the Task data. For now, they don't do anything.  Pressing save will eventually record the data.",
+                Toast.LENGTH_LONG).show();
 
         return view;
     }

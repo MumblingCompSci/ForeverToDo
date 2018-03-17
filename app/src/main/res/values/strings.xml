@@ -20,6 +20,14 @@
     <string name="done_button">Done</string>
     <string name="cancel_button">Cancel</string>
 
+    <!-- Category items -->
+    <string-array name="task_categories">
+        <item>School</item>
+        <item>Work</item>
+        <item>Social</item>
+        <item>Gaming Club</item>
+    </string-array>
+
     <!-- Testing Strings -->
     <string name="task_list">This is the task list page!</string>
     <string name="to_task">To task page</string>
