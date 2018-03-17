@@ -1,5 +1,6 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -43,9 +44,8 @@ public class SignUpFragment extends Fragment {
         mSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //TODO: Send an intent to start TaskListActivity or Kill LoginActivity to return to TaskListActivity
-                Toast toast = Toast.makeText(getContext(), "Goes to TaskList view", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent startTaskList = new Intent(getActivity(), TaskListActivity.class);
+                startActivity(startTaskList);
             }
         });
 
