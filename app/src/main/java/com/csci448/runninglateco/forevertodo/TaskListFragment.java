@@ -41,7 +41,7 @@ public class TaskListFragment extends Fragment {
         toProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startProfile = new Intent(getActivity(), ProfileActivity.class);
+                Intent startProfile = new Intent(getActivity(), LoginActivity.class);
                 startActivity(startProfile);
             }
         });

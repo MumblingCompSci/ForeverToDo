@@ -20,6 +20,7 @@ public class LoginFragment extends Fragment {
     private EditText mPassword;
     private Button mSignIn;
     private TextView mSignUp;
+    private Button crash;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_login, container, false);
@@ -46,6 +47,18 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        crash = (Button) v.findViewById(R.id.crash);
+        crash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forceCrash(view);
+            }
+        });
+
         return v;
     }
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
 }
