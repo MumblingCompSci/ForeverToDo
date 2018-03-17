@@ -2,6 +2,7 @@ package com.csci448.runninglateco.forevertodo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +34,11 @@ public class TaskFragment extends Fragment {
     private Spinner mCategory;
     private EditText mNotifs;
     private EditText mAlarms;
-    private Button mCancelButton;
-    private Button mDoneButton;
+
+    // two different "views" where all items will be disabled or enabled
+    // If false, clicking on the button will change title to "Save" and then enable all items
+    // Else if true, clicking on button will change title back to "Edit" and then disable items
+    private boolean mInEdit = false;
 
     public interface Callbacks {
         void onTaskUpdated(ToDoTask task);
@@ -75,26 +79,6 @@ public class TaskFragment extends Fragment {
         mAlarms = (EditText) view.findViewById(R.id.task_alarms);
         mAlarms.setEnabled(false);
 
-        mCancelButton = (Button) view.findViewById(R.id.cancel_button);
-        mCancelButton.setVisibility(View.INVISIBLE);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toastie = Toast.makeText(getContext(),
-                        "Back to Task List with no changes saved",
-                        Toast.LENGTH_SHORT);
-                toastie.show();
-            }
-        });
-        mDoneButton = (Button) view.findViewById(R.id.done_button);
-        mDoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toastie = Toast.makeText(getContext(),
-                        "Back to Task List with changes saved", Toast.LENGTH_SHORT);
-                toastie.show();
-            }
-        });
 
         return view;
     }
@@ -108,21 +92,52 @@ public class TaskFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit_task:
-                mTaskName.setEnabled(true);
-                mDueDate.setEnabled(true);
-                mDueTime.setEnabled(true);
-                mDescription.setEnabled(true);
-                mPriorityLvl.setEnabled(true);
-                mCategory.setEnabled(true);
-                mNotifs.setEnabled(true);
-                mAlarms.setEnabled(true);
-                mCancelButton.setVisibility(View.VISIBLE);
+            case R.id.edit_save:
+                mInEdit = !mInEdit;
+                updateTaskItems();
 
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void updateTaskItems() {
+        String subtitle;
+
+        if (mInEdit) {
+            subtitle = "Save";
+            enableItems();
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            activity.getSupportActionBar().setTitle(subtitle);
+        } else {
+            subtitle = "Edit";
+            disableItems();
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            activity.getSupportActionBar().setTitle(subtitle);
+        }
+    }
+
+    private void enableItems() {
+        mTaskName.setEnabled(true);
+        mDueDate.setEnabled(true);
+        mDueTime.setEnabled(true);
+        mDescription.setEnabled(true);
+        mPriorityLvl.setEnabled(true);
+        mCategory.setEnabled(true);
+        mNotifs.setEnabled(true);
+        mAlarms.setEnabled(true);
+    }
+
+    private void disableItems() {
+        mTaskName.setEnabled(false);
+        mDueDate.setEnabled(false);
+        mDueTime.setEnabled(false);
+        mDescription.setEnabled(false);
+        mPriorityLvl.setEnabled(false);
+        mCategory.setEnabled(false);
+        mNotifs.setEnabled(false);
+        mAlarms.setEnabled(false);
     }
 
     public static TaskFragment newInstance(UUID taskId) {
