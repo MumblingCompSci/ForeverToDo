@@ -41,7 +41,7 @@ public class TaskListFragment extends Fragment {
         toProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startProfile = new Intent(getActivity(), LoginActivity.class);
+                Intent startProfile = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(startProfile);
             }
         });
@@ -57,7 +57,7 @@ public class TaskListFragment extends Fragment {
         List<ToDoTask>tasks = new ArrayList<>();
         Random rand = new Random();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             ToDoTask task = new ToDoTask();
             task.setTitle(Integer.toString(rand.nextInt()));
             task.setDescription("I'm a description! :)");

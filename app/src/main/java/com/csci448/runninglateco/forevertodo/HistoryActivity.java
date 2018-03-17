@@ -1,11 +1,30 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity
+        implements CompletedFragment.Callbacks{
+    private static final String TAG = "HistoryActivity";
+
+    @Override
+    public void onTaskSelected(ToDoTask task){
+        Log.i(TAG, "Task Clicked!");
+        if (findViewById(R.id.detail_fragment_container) == null) {
+            Intent intent = TaskActivity.newIntent(this, task.getId());
+            startActivity(intent);
+        } else {
+            Fragment newDetail = TaskFragment.newInstance(task.getId());
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_fragment_container, newDetail)
+                    .commit();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +35,7 @@ public class HistoryActivity extends AppCompatActivity {
         Fragment graphFragment = fm.findFragmentById(R.id.graph_frame);
         Fragment completedFragment = fm.findFragmentById(R.id.completed_frame);
         if (graphFragment == null) {
-            graphFragment = new     GraphFragment();
+            graphFragment = new GraphFragment();
         }
         if (completedFragment == null) {
             completedFragment = new CompletedFragment();
