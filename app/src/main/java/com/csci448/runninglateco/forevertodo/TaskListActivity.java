@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
+
 public class TaskListActivity extends AppCompatActivity
     implements TaskListFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
@@ -20,6 +24,7 @@ public class TaskListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
 
         FragmentManager fm = getSupportFragmentManager();
