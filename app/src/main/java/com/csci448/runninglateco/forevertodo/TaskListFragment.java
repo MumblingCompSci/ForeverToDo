@@ -146,6 +146,8 @@ public class TaskListFragment extends Fragment {
                 return false;
             }
         });
+
+        sortMenu.show();
     }
 
     public interface Callbacks {
