@@ -165,6 +165,10 @@ public class TaskFragment extends Fragment {
         }
     }
 
+    public UUID getTaskId(){
+        return mTask.getId();
+    }
+
 
     private void enableItems() {
         mTaskName.setEnabled(true);
