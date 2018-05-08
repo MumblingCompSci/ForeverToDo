@@ -11,7 +11,7 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 
-public class TaskListActivity extends AppCompatActivity
+public class TaskListActivity extends SingleFragmentActivity
     implements TaskListFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
 
@@ -20,23 +20,6 @@ public class TaskListActivity extends AppCompatActivity
     }
 
     protected int getLayoutResId() { return R.layout.activity_masterdetail; }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        setContentView(getLayoutResId());
-
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-
-        if (fragment == null) {
-            fragment = createFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit();
-        }
-    }
 
     @Override
     public void onTaskSelected(ToDoTask task){

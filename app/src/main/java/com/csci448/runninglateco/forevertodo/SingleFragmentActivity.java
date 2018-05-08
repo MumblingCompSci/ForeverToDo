@@ -30,4 +30,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+
 }
+
+// TODO : set up fargment manager stuff for menu onclink
