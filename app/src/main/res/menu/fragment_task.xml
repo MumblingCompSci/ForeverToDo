@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/edit_save"
-        android:title="Edit"
+        android:title="Save"
         app:showAsAction="ifRoom" />
-
 </menu>

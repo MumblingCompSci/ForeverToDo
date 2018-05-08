@@ -28,6 +28,12 @@
         <item>Gaming Club</item>
     </string-array>
 
+    <!-- Menu Popup Items -->
+    <string name="sortby">Sort By</string>
+    <string name="duedate_sort">Due Date</string>
+    <string name="priority_sort">Priority</string>
+    <string name="category_sort">Category</string>
+
     <!-- Testing Strings -->
     <string name="task_list">This is the task list page!</string>
     <string name="to_task">To task page</string>

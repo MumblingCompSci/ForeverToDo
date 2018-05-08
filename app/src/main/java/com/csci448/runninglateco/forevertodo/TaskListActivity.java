@@ -12,7 +12,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
 public class TaskListActivity extends SingleFragmentActivity
-    implements TaskListFragment.Callbacks{
+    implements TaskListFragment.Callbacks, TaskFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
 
     protected Fragment createFragment() {
@@ -25,15 +25,21 @@ public class TaskListActivity extends SingleFragmentActivity
     public void onTaskSelected(ToDoTask task){
         Log.i(TAG, "Task Clicked!");
         if (findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = TaskActivity.newIntent(this, task.getId());
-            startActivity(intent);
+            Fragment newDetail = TaskFragment.newInstance(task.getId());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newDetail).commit();
         } else {
             Fragment newDetail = TaskFragment.newInstance(task.getId());
-
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_fragment_container, newDetail)
                     .commit();
         }
+    }
+
+    public void onTaskUpdated(ToDoTask task){
+        Fragment listFragment = createFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, listFragment)
+                .commit();
     }
 }
 
@@ -41,10 +47,6 @@ public class TaskListActivity extends SingleFragmentActivity
 //TODO: add a static "sort by" button to the scrolling page
 //TODO: add a + menu item to add a new task
 //TODO: create new ToDoTask class
-//TODO: create new TaskWithImage class that extends ToDoTask
-//TODO: create a TaskActivity to show the details of the activity
-//TODO: give TaskActivity an Edit/Done button
-//TODO: set up TaskActivity to "be a child" of TaskListActivity so that the up button takes it back
 
 //TODO: set up a landscape view for TaskListActivity that shows the list and the details like CriminalActivity did
 //TODO: implement a NavigationDrawer????

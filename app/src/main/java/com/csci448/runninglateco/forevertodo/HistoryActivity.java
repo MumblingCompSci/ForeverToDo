@@ -15,8 +15,8 @@ public class HistoryActivity extends AppCompatActivity
     public void onTaskSelected(ToDoTask task){
         Log.i(TAG, "Task Clicked!");
         if (findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = TaskActivity.newIntent(this, task.getId());
-            startActivity(intent);
+            Fragment newDetail = TaskFragment.newInstance(task.getId());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newDetail).commit();
         } else {
             Fragment newDetail = TaskFragment.newInstance(task.getId());
 
