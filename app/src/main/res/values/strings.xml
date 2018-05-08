@@ -37,4 +37,10 @@
     <string name="graph_text">This picture will eventually become a graph that is generated based on the number of tasks completed in the last seven days.</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="to_profile">To profile</string>
+
+    <!-- Navigation Strings -->
+    <string name="nav_home">Main Task List Page</string>
+    <string name="nav_settings">Settings Page</string>
+    <string name="nav_history">Task Completion History</string>
+
 </resources>
