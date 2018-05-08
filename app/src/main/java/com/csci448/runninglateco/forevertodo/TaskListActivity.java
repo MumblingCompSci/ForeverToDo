@@ -15,10 +15,12 @@ public class TaskListActivity extends SingleFragmentActivity
     implements TaskListFragment.Callbacks, TaskFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
 
+    @Override
     protected Fragment createFragment() {
         return TaskListFragment.newInstance();
     }
 
+    @Override
     protected int getLayoutResId() { return R.layout.activity_masterdetail; }
 
     @Override
