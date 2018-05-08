@@ -39,8 +39,8 @@
     <string name="to_profile">To profile</string>
 
     <!-- Navigation Strings -->
-    <string name="nav_home">Main Task List Page</string>
-    <string name="nav_settings">Settings Page</string>
-    <string name="nav_history">Task Completion History</string>
+    <string name="nav_home">ToDo</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_history">History</string>
 
 </resources>
