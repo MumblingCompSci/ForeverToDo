@@ -18,6 +18,8 @@ public class ToDoTask {
         mId = UUID.randomUUID();
     }
 
+    public ToDoTask(UUID id){mId = id;}
+
     public  UUID getId() { return mId; }
 
     public String getTitle() {
