@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 
 public class TaskActivity extends SingleFragmentActivity {
-    private UUID mTaskId = UUID.randomUUID();
+    private static UUID mTaskId;
 
     @Override
     protected Fragment createFragment() {
@@ -19,6 +19,8 @@ public class TaskActivity extends SingleFragmentActivity {
     }
 
     public static Intent newIntent(Context context, UUID taskId) {
+        mTaskId = taskId;
         return new Intent(context, TaskActivity.class);
     }
+
 }

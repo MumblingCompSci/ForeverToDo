@@ -9,10 +9,12 @@ import java.util.UUID;
 
 public class ToDoTask {
     private UUID mId;
-    private String mTitle;
-    private String mDescription;
+    private String mTitle = "";
+    private String mDescription = "";
     private Date mDueDate;
     private Date mCompleteDate = new Date();
+    private int mPriority = 0;
+    private String mCategory = "";
 
     public ToDoTask() {
         mId = UUID.randomUUID();
@@ -53,7 +55,24 @@ public class ToDoTask {
     public void setCompleteDate(Date completeDate) {
         mCompleteDate = completeDate;
     }
-//TODO: how do we want to store dates and times?
+
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public int getPriority() {
+        return mPriority;
+    }
+
+    public void setPriority(int priority) {
+        mPriority = priority;
+    }
+
+    //TODO: how do we want to store dates and times?
 
     //TODO: do we want to create a Builder for this class?  I don't know how practical that'd be but they look cool
     // We probably don't actually need to make this class for the Alpha release

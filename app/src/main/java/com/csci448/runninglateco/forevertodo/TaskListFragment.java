@@ -34,11 +34,19 @@ public class TaskListFragment extends Fragment {
     private TaskAdapter mTaskAdapter;
     private Button toProfile;
     private Button toHistory;
+    private Callbacks mCallbacks;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -62,19 +70,10 @@ public class TaskListFragment extends Fragment {
             }
         });
 
-        List<ToDoTask>tasks = new ArrayList<>();
-        Random rand = new Random();
 
-        for (int i = 0; i < 30; i++) {
-            ToDoTask task = new ToDoTask();
-            task.setTitle(Integer.toString(rand.nextInt()));
-            task.setDescription("I'm a description! :)");
-            tasks.add(task);
-        }
-        mTaskAdapter = new TaskAdapter(tasks);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
-        mRecyclerView.setAdapter(mTaskAdapter);
+        updateUI();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
@@ -90,8 +89,12 @@ public class TaskListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_task:
-                Toast.makeText(getContext(), "This would normally open a blank \"template\" to fill in to create a new task.", Toast.LENGTH_LONG)
-                .show();
+                ToDoTask task = new ToDoTask();
+                Log.i(TAG, "Created a new task: " + task.getId().toString());
+                ToDoTaskBank.get(getActivity()).addToDoTask(task);
+                updateUI();
+                Log.i(TAG, "After updating UI, task's id is: " + task.getId().toString());
+                mCallbacks.onTaskSelected(task);
                 return true;
 
             // This is for the menu item with the 3 vertical dots
@@ -210,6 +213,8 @@ public class TaskListFragment extends Fragment {
             return mTasks.size();
         }
 
+        public void setTasks(List<ToDoTask> tasks){mTasks = tasks;}
+
         public void sortByDueDate() {
             // Sort mTasks by due date
         }
@@ -220,6 +225,18 @@ public class TaskListFragment extends Fragment {
 
         public void sortByCategory() {
 
+        }
+    }
+
+    public void updateUI() {
+        ToDoTaskBank toDoTaskBank = ToDoTaskBank.get(getActivity());
+        List<ToDoTask> tasks = toDoTaskBank.getToDoTasks();
+        if (mTaskAdapter == null) {
+            mTaskAdapter = new TaskAdapter(tasks);
+            mRecyclerView.setAdapter(mTaskAdapter);
+        } else {
+            mTaskAdapter.setTasks(tasks);
+            mTaskAdapter.notifyDataSetChanged();
         }
     }
 

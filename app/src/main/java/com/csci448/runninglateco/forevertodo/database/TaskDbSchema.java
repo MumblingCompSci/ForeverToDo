@@ -13,6 +13,8 @@ public class TaskDbSchema {
             public static final String DESCRIPTION = "description";
             public static final String DUEDATE = "duedate";
             public static final String COMPLETEDATE = "completedate";
+            public static final String PRIORITY = "priority";
+            public static final String CATEGORY = "category";
         }
     }
 }
