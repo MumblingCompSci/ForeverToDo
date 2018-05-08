@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,14 +93,55 @@ public class TaskListFragment extends Fragment {
                 Toast.makeText(getContext(), "This would normally open a blank \"template\" to fill in to create a new task.", Toast.LENGTH_LONG)
                 .show();
                 return true;
+
+            // This is for the menu item with the 3 vertical dots
+            case R.id.sort_popup_menu:
+                // Method called to show the actual popup menu, set up this way to be a menu within the menu
+                // Hopefully it will show the "Sort by" text..
+                showPopupMenu();
+
+                Log.d(TAG, "Popup menu item selected");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void showPopupMenu() {
+        PopupMenu sortMenu = new PopupMenu(getActivity(), this.getView());
+
+        sortMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            // This will sort the list of tasks based on which menu item user selects
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // Menu items selection
+                // Sorting methods are in Task Adapter since that's where the list of tasks are made
+                switch (menuItem.getItemId()) {
+                    case R.id.sort_duedate:
+                        Log.d(TAG, "Sorting by due date");
+                        mTaskAdapter.sortByDueDate();
+
+                        return true;
+                    case R.id.sort_priority:
+                        Log.d(TAG, "Sorting by priority");
+                        mTaskAdapter.sortByPriority();
+
+                        return true;
+                    case R.id.sort_category:
+                        Log.d(TAG, "Sorting by category");
+                        mTaskAdapter.sortByCategory();
+
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
     public interface Callbacks {
         void onTaskSelected(ToDoTask task);
     }
+
     public static TaskListFragment newInstance() {
         return new TaskListFragment();
     }
@@ -163,6 +206,18 @@ public class TaskListFragment extends Fragment {
         @Override
         public int getItemCount(){
             return mTasks.size();
+        }
+
+        public void sortByDueDate() {
+            // Sort mTasks by due date
+        }
+
+        public void sortByPriority() {
+            // Sort mTasks by priority
+        }
+
+        public void sortByCategory() {
+
         }
     }
 

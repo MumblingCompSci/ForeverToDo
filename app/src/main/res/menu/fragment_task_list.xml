@@ -7,5 +7,10 @@
         android:icon="@drawable/ic_action_add"
         android:title="@string/new_task"
         app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/sort_popup_menu"
+        android:title="Sort By"
+        android:icon="@drawable/menu_popup"
+        app:showAsAction="always"/>
 
 </menu>
