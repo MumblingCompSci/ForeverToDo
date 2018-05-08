@@ -46,7 +46,6 @@ public class TaskListActivity extends AppCompatActivity
             startActivity(intent);
         } else {
             Fragment newDetail = TaskFragment.newInstance(task.getId());
-
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_fragment_container, newDetail)
                     .commit();
