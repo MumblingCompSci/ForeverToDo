@@ -293,6 +293,18 @@ public class TaskFragment extends Fragment {
                 mCallbacks.onTaskUpdated();
             }
         });
+
+        Button cancelButton = (Button) view.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, TaskListFragment.newInstance(0))
+                        .commit();
+
+            }
+        });
+
         return view;
     }
 

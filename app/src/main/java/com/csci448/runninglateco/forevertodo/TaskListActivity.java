@@ -3,6 +3,11 @@ package com.csci448.runninglateco.forevertodo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PointF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +24,7 @@ import io.fabric.sdk.android.Fabric;
 import io.fabric.sdk.android.services.concurrency.Task;
 
 public class TaskListActivity extends AppCompatActivity
-    implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks{
+    implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks, SensorEventListener{
     private static final String TAG = "TaskListActivity";
     private static final String EXTRA_TASK_SELECTED = "task selected";
     private static final String EXTRA_SOUND_ON = "sound on";
@@ -28,6 +33,8 @@ public class TaskListActivity extends AppCompatActivity
     private UUID mCurrentTaskId;
     private static int mSortingBy;
 
+
+    private Sensor mShake;
 
     protected Fragment createFragment(int sortingBy) {
         return TaskListFragment.newInstance(sortingBy);
@@ -43,6 +50,10 @@ public class TaskListActivity extends AppCompatActivity
                 sharedPref.getInt(EXTRA_NOTIFICATION_TIME, 0));
         invalidateOptionsMenu();
         super.onCreate(savedInstanceState);
+
+        mShake =((SensorManager) getSystemService(SENSOR_SERVICE))
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         if(savedInstanceState != null) {
             mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
         }
@@ -130,15 +141,42 @@ public class TaskListActivity extends AppCompatActivity
         savedInstanceState.putSerializable(EXTRA_TASK_SELECTED, mCurrentTaskId);
     }
 
+
     public static Intent newIntent(Context context) {
         return new Intent(context, TaskListActivity.class);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SensorManager) getSystemService(SENSOR_SERVICE)).registerListener(this, mShake, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((SensorManager) getSystemService(SENSOR_SERVICE)).unregisterListener(this);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // I'm not sure this actually needs to do something
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        switch(event.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                Double val = Math.abs((0.3333)*(event.values[0] + event.values[1] + event.values[2]));
+                if (val > 50.00 ) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, CageFragment.newInstance())
+                            .commit();
+                }
+                break;
+            default :
+                break;
+        }
+
+    }
 }
-
-//TODO: create list scrolling activity similar to the one from CriminalIntent
-//TODO: add a static "sort by" button to the scrolling page
-//TODO: add a + menu item to add a new task
-//TODO: create new ToDoTask class
-
-//TODO: set up a landscape view for TaskListActivity that shows the list and the details like CriminalActivity did
-//TODO: implement a NavigationDrawer????

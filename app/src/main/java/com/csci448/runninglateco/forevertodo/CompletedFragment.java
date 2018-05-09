@@ -2,6 +2,7 @@ package com.csci448.runninglateco.forevertodo;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -65,16 +71,41 @@ public class CompletedFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private ToDoTask mTask;
+        private LinearLayout info_holder;
 
         public TaskHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_task, parent, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.task_title);
             mDateTextView = (TextView) itemView.findViewById(R.id.task_due_date);
+            info_holder = itemView.findViewById(R.id.task_info_holder);
         }
 
         public void bind(ToDoTask task) {
             mTask = task;
+            if (info_holder != null) {
+                switch (task.getPriority()) {
+                    case 10:
+                    case 9:
+                    case 8:
+                        info_holder.setBackgroundColor(Color.parseColor("#ed5d50"));
+                        break;
+                    case 7:
+                    case 6:
+                    case 5:
+                        info_holder.setBackgroundColor(Color.parseColor("#d6a10e"));
+                        break;
+                    case 4:
+                    case 3:
+                    case 2:
+                        info_holder.setBackgroundColor(Color.parseColor("#96d15c"));
+                        break;
+                    default:
+                        info_holder.setBackgroundColor(Color.parseColor("#ffffff"));
+                        break;
+                }
+            }
+
             mTitleTextView.setText(mTask.getTitle());
             mTitleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,7 +114,18 @@ public class CompletedFragment extends Fragment {
                     mCallbacks.onTaskSelected(mTask);
                 }
             });
-            mDateTextView.setText(mTask.getCompleteDate().toString());
+
+            if(mTask.getDueDate().getTime() != 0){
+                SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm a", Locale.US);
+
+                String dateString = format.format(task.getDueDate());
+
+                mDateTextView.setText(dateString);
+            }
+            else{
+                mDateTextView.setText("");
+            }
+
             mDateTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -145,7 +187,6 @@ public class CompletedFragment extends Fragment {
             mTaskAdapter.notifyDataSetChanged();
         }
     }
-
 }
 
 //TODO: set up scrolling list similar to Criminal Intent

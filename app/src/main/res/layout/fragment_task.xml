@@ -91,209 +91,45 @@
             android:layout_height="wrap_content"
             android:entries="@array/task_categories"/>
 
-            <Button
-                android:id="@+id/completed_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Save" />
-
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Delete"
+        <Button
+            android:id="@+id/completed_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             />
-
-
-
-
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="25dp">
-
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="25dp"
-                android:text="@string/cancel_button"/>
-
-            <Button
-                android:id="@+id/done_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/done_button"/>
-        </LinearLayout>-->
-
-    </LinearLayout>
-
-</ScrollView>
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:layout_gravity="center"
-    android:background="@android:color/white">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/task_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:layout_gravity="center"
-            android:text="Task Name"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/due_date"/>
-        <TextView
-            android:id="@+id/task_due_date_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:padding="8dp"
-            android:background="#efefef"
-            android:textSize="15dp"
-            android:text="12/01/2018 08:00 AM"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/due_time"/>
-        <TextView
-            android:id="@+id/task_due_time_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:padding="8dp"
-            android:background="#efefef"
-            android:textSize="15dp"
-            android:text="08:00 AM"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/description"/>
-        <TextView
-            android:id="@+id/task_description_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/edit_text"
-            android:textSize="15dp"
-            android:text="Some description"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/priority_level"/>
-        <TextView
-            android:id="@+id/priority_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="5"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/category_box"/>
-        <TextView
-            android:id="@+id/category_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="School"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/notif_string"/>
-        <TextView
-            android:id="@+id/task_notifs_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="15dp"
-            android:text="@string/notif_temp"
-            android:padding="8dp"
-            android:background="#efefef" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/alarm_string"/>
-        <TextView
-            android:id="@+id/task_alarms_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="@string/alarm_temp"
-            android:textSize="15dp"
-            android:padding="8dp"
-            android:background="#efefef" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="25dp">
-
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="25dp"
-                android:text="@string/cancel_button"/>
+                android:background="@color/green"
+                android:text="@string/save_button" />
 
             <Button
-                android:id="@+id/done_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/delete_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/done_button"/>
+                android:background="@color/red"
+                android:text="@string/delete_button"
+                />
+
         </LinearLayout>
 
-
+        <Button
+            android:id="@+id/cancel_button"
+            android:text="@string/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-
-
-</ScrollView> -->
+</ScrollView>
