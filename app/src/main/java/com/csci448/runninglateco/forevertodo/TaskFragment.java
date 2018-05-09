@@ -1,8 +1,10 @@
 package com.csci448.runninglateco.forevertodo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telecom.Call;
 import android.util.Log;
@@ -27,6 +29,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -41,6 +44,8 @@ public class TaskFragment extends Fragment {
     private EditText mTaskName;
     private EditText mDueDate;
     private EditText mDueTime;
+    private Button mCompleteTime;
+    private Button mSaveButton;
     private EditText mDescription;
     private SeekBar mPriorityLvl;
     private Spinner mCategory;
@@ -92,7 +97,9 @@ public class TaskFragment extends Fragment {
         mTaskName.setText(mTask.getTitle());
 
         mDueDate = (EditText) view.findViewById(R.id.task_due_date);
-        mDueDate.setText(mTask.getDueDate().toString());
+        if(mTask.getDueDate().getTime() != 0){
+            mDueDate.setText(mTask.getDueDate().toString());
+        }
 
         //TODO: Set up date dialogue
         mDueDate.setOnClickListener(new View.OnClickListener() {
@@ -139,52 +146,54 @@ public class TaskFragment extends Fragment {
             }
         });
 
-        return view;
-    }
+        mCompleteTime = (Button) view.findViewById(R.id.completed_button);
+        if(mTask.getCompleteDate().getTime() != 0){
+            mCompleteTime.setText("Task completed on " + mTask.getCompleteDate().toString());
+            mCompleteTime.setEnabled(false);
+        }
+        else{
+            mCompleteTime.setText("Completed the task");
+            mCompleteTime.setEnabled(true);
+        }
+        mCompleteTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Mark as complete?")
+                        .setMessage("Are you sure you want to mark this complete?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mTask.setCompleteDate(new Date());
+                                mCompleteTime.setText("Task completed on " + mTask.getCompleteDate().toString());
+                                mCompleteTime.setEnabled(false);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_task, menu);
-    }
+                            }
+                        })
+                        .show();
+            }
+        });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.edit_save:
+        mSaveButton = (Button) view.findViewById(R.id.save_button);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Log.i(TAG, "Saving task");
                 mTask.setPriority(mPriorityLvl.getProgress());
                 mTask.setTitle(mTaskName.getText().toString());
                 mTask.setDescription(mDescription.getText().toString());
-                mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                if(mDueDate.getText() != null){
+                    mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                }
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
                 mCallbacks.onTaskUpdated(mTask);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public UUID getTaskId(){
-        return mTask.getId();
-    }
-
-
-    private void enableItems() {
-        mTaskName.setEnabled(true);
-        mDueDate.setEnabled(true);
-        mDueTime.setEnabled(true);
-        mDescription.setEnabled(true);
-        mPriorityLvl.setEnabled(true);
-        mCategory.setEnabled(true);
-    }
-
-    private void disableItems() {
-        mTaskName.setEnabled(false);
-        mDueDate.setEnabled(false);
-        mDueTime.setEnabled(false);
-        mDescription.setEnabled(false);
-        mPriorityLvl.setEnabled(false);
-        mCategory.setEnabled(false);
+            }
+        });
+        return view;
     }
 }

@@ -27,9 +27,11 @@ public class TaskListActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        invalidateOptionsMenu();
         super.onCreate(savedInstanceState);
-
-        mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
+        if(savedInstanceState != null) {
+            mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
+        }
         Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
 
@@ -43,20 +45,26 @@ public class TaskListActivity extends AppCompatActivity
                     .commit();
         }
         else{
-
             fragment = createFragment();
             fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        }
+
+        if(mCurrentTaskId != null){
+            onTaskSelected(ToDoTaskBank.get(this).getToDoTask(mCurrentTaskId));
         }
     }
 
     @Override
     public void onTaskSelected(ToDoTask task){
+        invalidateOptionsMenu();
         Log.i(TAG, "Task Clicked!");
         mCurrentTaskId = task.getId();
         if (findViewById(R.id.detail_fragment_container) == null) {
+            Log.i(TAG, "Creating portrait view");
             Fragment newDetail = TaskFragment.newInstance(task.getId());
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newDetail).commit();
         } else {
+            Log.i(TAG, "Creating landscape view");
             Fragment newDetail = TaskFragment.newInstance(task.getId());
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_fragment_container, newDetail)
@@ -74,6 +82,7 @@ public class TaskListActivity extends AppCompatActivity
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
+        invalidateOptionsMenu();
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable(EXTRA_TASK_SELECTED, mCurrentTaskId);
     }

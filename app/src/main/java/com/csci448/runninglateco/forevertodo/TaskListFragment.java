@@ -53,7 +53,6 @@ public class TaskListFragment extends Fragment {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setHasOptionsMenu(true);
-
     }
 
     @Override

@@ -86,8 +86,18 @@ public class ToDoTaskBank {
         values.put(TaskTable.Cols.UUID, task.getId().toString());
         values.put(TaskTable.Cols.TITLE, task.getTitle());
         values.put(TaskTable.Cols.DESCRIPTION, task.getDescription());
-        //values.put(TaskTable.Cols.DUEDATE, task.getDueDate().getTime());
-        values.put(TaskTable.Cols.COMPLETEDATE, task.getCompleteDate().getTime());
+        if(task.getDueDate() == null){
+            values.put(TaskTable.Cols.DUEDATE, 0);
+        }
+        else {
+            values.put(TaskTable.Cols.DUEDATE, task.getDueDate().getTime());
+        }
+        if(task.getCompleteDate() == null){
+            values.put(TaskTable.Cols.COMPLETEDATE, 0);
+        }
+        else {
+            values.put(TaskTable.Cols.COMPLETEDATE, task.getCompleteDate().getTime());
+        }
         values.put(TaskTable.Cols.PRIORITY, task.getPriority());
         values.put(TaskTable.Cols.CATEGORY, task.getCategory());
 

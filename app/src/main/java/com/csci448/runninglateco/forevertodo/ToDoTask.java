@@ -12,7 +12,7 @@ public class ToDoTask {
     private String mTitle = "";
     private String mDescription = "";
     private Date mDueDate;
-    private Date mCompleteDate = new Date();
+    private Date mCompleteDate;
     private int mPriority = 0;
     private String mCategory = "";
 

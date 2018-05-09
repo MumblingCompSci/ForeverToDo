@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
-            android:text="@string/task_name"/>
+            android:text="@string/task_name"
+            />
         <EditText
             android:id="@+id/task_name"
             android:layout_width="match_parent"
@@ -89,6 +90,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/task_categories"/>
+
+            <Button
+                android:id="@+id/completed_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Save" />
+
 
 
 

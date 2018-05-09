@@ -24,7 +24,7 @@ public class TaskCursorWrapper extends CursorWrapper{
         long dueDate = getLong(getColumnIndex(TaskTable.Cols.DUEDATE));
         long completeDate = getLong(getColumnIndex(TaskTable.Cols.COMPLETEDATE));
         int priority = getInt(getColumnIndex(TaskTable.Cols.PRIORITY));
-        String catergory = getString(getColumnIndex(TaskTable.Cols.CATEGORY));
+        String category = getString(getColumnIndex(TaskTable.Cols.CATEGORY));
 
         ToDoTask task = new ToDoTask(UUID.fromString(uuidString));
         task.setTitle(title);
@@ -32,7 +32,7 @@ public class TaskCursorWrapper extends CursorWrapper{
         task.setDueDate(new Date(dueDate));
         task.setCompleteDate(new Date(completeDate));
         task.setPriority(priority);
-        task.setCategory(catergory);
+        task.setCategory(category);
 
         return task;
     }
