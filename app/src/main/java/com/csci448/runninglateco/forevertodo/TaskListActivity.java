@@ -16,7 +16,7 @@ import java.util.UUID;
 import io.fabric.sdk.android.Fabric;
 
 public class TaskListActivity extends AppCompatActivity
-    implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks{
+    implements TaskListFragment.Callbacks, TaskFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
     private static final String EXTRA_TASK_SELECTED = "task_selected";
     private UUID mCurrentTaskId;
@@ -94,7 +94,6 @@ public class TaskListActivity extends AppCompatActivity
         }
     }
 
-    @Override
     public void onTaskUpdated(ToDoTask task){
         Fragment listFragment = createFragment();
         mCurrentTaskId = null;
