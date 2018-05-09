@@ -8,23 +8,69 @@
         android:layout_height="wrap_content"
         android:text="Settings"
         android:textSize="30dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/colorPrimaryDark"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notifications"/>
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notifications"
+            android:textSize="15dp"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+        <Switch
+            android:id="@+id/notification_on_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vibration and sound"
-        />
-    <TextView
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vibration and Sounds"
+            android:textSize="15dp"
+            android:layout_weight="1"/>
+
+        <Switch
+            android:id="@+id/sound_on_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How early do you want to be notified?"
-        />
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Notification Time"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            />
+        <Spinner
+            android:id="@+id/notification_time_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            >
+        </Spinner>
+    </LinearLayout>
 
 </LinearLayout>
