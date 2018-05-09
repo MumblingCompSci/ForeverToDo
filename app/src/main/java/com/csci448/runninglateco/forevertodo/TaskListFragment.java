@@ -63,22 +63,7 @@ public class TaskListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
-        toProfile = (Button) view.findViewById(R.id.to_profile_button);
-        toProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startProfile = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(startProfile);
-            }
-        });
-        toHistory = (Button) view.findViewById(R.id.to_history_button);
-        toHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startHistory = new Intent(getActivity(), HistoryActivity.class);
-                startActivity(startHistory);
-            }
-        });
+
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
         updateUI();
