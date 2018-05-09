@@ -34,6 +34,7 @@ import java.util.Random;
 
 public class TaskListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
+    private static final String ARG_SORT_SELECTION = "sort selection";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
     private Button toProfile;
@@ -118,6 +119,7 @@ public class TaskListFragment extends Fragment {
                         switch (option) {
                             case 0:
                                 mTaskAdapter.sortByDueDate();
+
                                 Log.d(TAG, "Sorting by due date");
                                 break;
                             case 1:
@@ -139,7 +141,9 @@ public class TaskListFragment extends Fragment {
         void onTaskSelected(ToDoTask task);
     }
 
-    public static TaskListFragment newInstance() {
+    public static TaskListFragment newInstance(int sortSelection) {
+        Bundle args = new Bundle();
+
         return new TaskListFragment();
     }
 

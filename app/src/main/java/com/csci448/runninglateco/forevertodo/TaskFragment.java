@@ -52,6 +52,7 @@ public class TaskFragment extends Fragment {
     private ToDoTask mTask;
     private ArrayList<String> mCategories;
     private Callbacks mCallbacks;
+    private Button mDeleteButton;
 
     public interface Callbacks{
         void onTaskUpdated(ToDoTask task);
@@ -193,6 +194,15 @@ public class TaskFragment extends Fragment {
                 }
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
                 mCallbacks.onTaskUpdated(mTask);
+            }
+        });
+
+        mDeleteButton = (Button) view.findViewById(R.id.delete_button);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToDoTaskBank.get(getContext()).deleteToDoTask(mTask.getId());
+                mCallbacks.onTaskUpdated(null);
             }
         });
         return view;

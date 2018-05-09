@@ -22,7 +22,7 @@ public class TaskListActivity extends AppCompatActivity
     private UUID mCurrentTaskId;
 
     protected Fragment createFragment() {
-        return TaskListFragment.newInstance();
+        return TaskListFragment.newInstance(1);
     }
 
     protected int getLayoutResId() { return R.layout.activity_masterdetail; }
@@ -46,7 +46,7 @@ public class TaskListActivity extends AppCompatActivity
                             Fragment selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.nav_home:
-                                    selectedFragment = TaskListFragment.newInstance();
+                                    selectedFragment = TaskListFragment.newInstance(1);
                                     break;
                                 case R.id.nav_history:
                                     selectedFragment = CompletedFragment.newInstance();
@@ -72,7 +72,7 @@ public class TaskListActivity extends AppCompatActivity
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, TaskListFragment.newInstance())
+                .replace(R.id.fragment_container, TaskListFragment.newInstance(1))
                 .commit();
     }
 

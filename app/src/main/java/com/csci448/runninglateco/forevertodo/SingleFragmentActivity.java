@@ -32,7 +32,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.nav_home:
-                                selectedFragment = TaskListFragment.newInstance();
+                                selectedFragment = TaskListFragment.newInstance(1);
                                 break;
                             case R.id.nav_history:
                                 selectedFragment = CompletedFragment.newInstance();
@@ -53,7 +53,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
                 });
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, TaskListFragment.newInstance())
+                .replace(R.id.fragment_container, TaskListFragment.newInstance(1))
                 .commit();
     }
 }
