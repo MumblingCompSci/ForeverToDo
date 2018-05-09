@@ -48,11 +48,12 @@ public class TaskFragment extends Fragment {
     private ToDoTask mTask;
     private ArrayList<String> mCategories;
     private Callbacks mCallbacks;
+    private Button mDeleteButton;
 
     private Date tempDate = new Date();
 
     public interface Callbacks{
-        void onTaskUpdated(ToDoTask task);
+        void onTaskUpdated();
     }
 
     @Override
@@ -238,13 +239,21 @@ public class TaskFragment extends Fragment {
                 mTask.setPriority(mPriorityLvl.getProgress());
                 mTask.setTitle(mTaskName.getText().toString());
                 mTask.setDescription(mDescription.getText().toString());
-                if(mDueDate.getText() != null){
-                    //mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                if(mDueDate.getText() != null && mDueDate.getText().toString() != ""){
+                    Log.i(TAG, "here! This is the text: " + mDueDate.getText().toString() + " end");
                     mTask.setDueDate(tempDate);
-
                 }
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
-                mCallbacks.onTaskUpdated(mTask);
+                mCallbacks.onTaskUpdated();
+            }
+        });
+
+        mDeleteButton = (Button) view.findViewById(R.id.delete_button);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToDoTaskBank.get(getContext()).deleteToDoTask(mTask.getId());
+                mCallbacks.onTaskUpdated();
             }
         });
         return view;

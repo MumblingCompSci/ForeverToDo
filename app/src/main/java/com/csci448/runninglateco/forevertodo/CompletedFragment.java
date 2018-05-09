@@ -1,13 +1,17 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,24 +26,27 @@ public class CompletedFragment extends Fragment {
     private static final String TAG = "CompletedFragment";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
+    private Callbacks mCallbacks;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
+    }
+
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_completed, container, false);
 
-        List<ToDoTask>tasks = new ArrayList<>();
-        Random rand = new Random();
-
-        for (int i = 0; i < 30; i++) {
-            ToDoTask task = new ToDoTask();
-            task.setTitle(Integer.toString(rand.nextInt()));
-            task.setDescription("I'm a description! :)");
-            tasks.add(task);
-        }
-        mTaskAdapter = new TaskAdapter(tasks);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.completed_recycler);
-        mRecyclerView.setAdapter(mTaskAdapter);
+        updateUI();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
@@ -48,8 +55,9 @@ public class CompletedFragment extends Fragment {
     public interface Callbacks {
         void onTaskSelected(ToDoTask task);
     }
-    public static TaskListFragment newInstance() {
-        return new TaskListFragment();
+
+    public static CompletedFragment newInstance() {
+        return new CompletedFragment();
     }
 
 
@@ -72,21 +80,21 @@ public class CompletedFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Log.i(TAG, "Calling onTaskSelected");
-                    ((HistoryActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
             mDateTextView.setText(mTask.getCompleteDate().toString());
             mDateTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((HistoryActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
         }
 
         @Override
         public void onClick(View view){
-
+            mCallbacks.onTaskSelected(mTask);
         }
 
     }
@@ -95,7 +103,17 @@ public class CompletedFragment extends Fragment {
         private List<ToDoTask> mTasks;
 
         public TaskAdapter(List<ToDoTask> tasks){
-            mTasks = tasks;
+            setTasks(tasks);
+        }
+
+        public void setTasks(List<ToDoTask> tasks){
+            List<ToDoTask> completed = new ArrayList<>();
+            for(int i = 0; i < tasks.size(); ++i){
+                if(tasks.get(i).getCompleteDate().getTime() != 0){
+                    completed.add(tasks.get(i));
+                }
+            }
+            mTasks = completed;
         }
 
         @Override
@@ -113,6 +131,18 @@ public class CompletedFragment extends Fragment {
         @Override
         public int getItemCount(){
             return mTasks.size();
+        }
+    }
+
+    public void updateUI() {
+        ToDoTaskBank toDoTaskBank = ToDoTaskBank.get(getActivity());
+        List<ToDoTask> tasks = toDoTaskBank.getToDoTasks();
+        if (mTaskAdapter == null) {
+            mTaskAdapter = new TaskAdapter(tasks);
+            mRecyclerView.setAdapter(mTaskAdapter);
+        } else {
+            mTaskAdapter.setTasks(tasks);
+            mTaskAdapter.notifyDataSetChanged();
         }
     }
 

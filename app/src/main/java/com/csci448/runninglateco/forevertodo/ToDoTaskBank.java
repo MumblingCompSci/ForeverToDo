@@ -42,6 +42,10 @@ public class ToDoTaskBank {
         mDatabase.insert(TaskTable.NAME, null, values);
     }
 
+    public void deleteToDoTask(UUID id){
+        mDatabase.delete(TaskTable.NAME, TaskTable.Cols.UUID + " = ?", new String[] {id.toString()});
+    }
+
     public  List<ToDoTask> getToDoTasks(){
         List<ToDoTask> tasks = new ArrayList<>();
         TaskCursorWrapper cursor = queryToDoTasks(null, null);

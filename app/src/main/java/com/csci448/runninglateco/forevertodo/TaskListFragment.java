@@ -34,10 +34,10 @@ import java.util.Random;
 
 public class TaskListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
+    private static final String ARG_SORT_SELECTION = "sort selection";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
-    private Button toProfile;
-    private Button toHistory;
+    private int mSortSelection;
     private Callbacks mCallbacks;
 
     @Override
@@ -57,28 +57,14 @@ public class TaskListFragment extends Fragment {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setHasOptionsMenu(true);
+        mSortSelection = getArguments().getInt(ARG_SORT_SELECTION);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
-        toProfile = (Button) view.findViewById(R.id.to_profile_button);
-        toProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startProfile = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(startProfile);
-            }
-        });
-        toHistory = (Button) view.findViewById(R.id.to_history_button);
-        toHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startHistory = new Intent(getActivity(), HistoryActivity.class);
-                startActivity(startHistory);
-            }
-        });
+
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
         updateUI();
@@ -133,14 +119,23 @@ public class TaskListFragment extends Fragment {
                         switch (option) {
                             case 0:
                                 mTaskAdapter.sortByDueDate();
+                                TaskListActivity.setSortingBy(0);
+                                mSortSelection = 0;
+                                updateUI();
                                 Log.d(TAG, "Sorting by due date");
                                 break;
                             case 1:
                                 mTaskAdapter.sortByPriority();
+                                TaskListActivity.setSortingBy(1);
+                                mSortSelection = 1;
+                                updateUI();
                                 Log.d(TAG, "Sorting by priority");
                                 break;
                             case 2:
                                 mTaskAdapter.sortByCategory();
+                                TaskListActivity.setSortingBy(2);
+                                mSortSelection = 2;
+                                updateUI();
                                 Log.d(TAG, "Sorting by category");
                                 break;
                         }
@@ -154,8 +149,12 @@ public class TaskListFragment extends Fragment {
         void onTaskSelected(ToDoTask task);
     }
 
-    public static TaskListFragment newInstance() {
-        return new TaskListFragment();
+    public static TaskListFragment newInstance(int sortSelection) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_SORT_SELECTION, sortSelection);
+        TaskListFragment fragment = new TaskListFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -177,14 +176,19 @@ public class TaskListFragment extends Fragment {
             mTitleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((TaskListActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
-            mDateTextView.setText(mTask.getCompleteDate().toString());
+            if(mTask.getDueDate().getTime() != 0){
+                mDateTextView.setText(mTask.getDueDate().toString());
+            }
+            else{
+                mDateTextView.setText("");
+            }
             mDateTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((TaskListActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
         }
@@ -200,7 +204,7 @@ public class TaskListFragment extends Fragment {
         private List<ToDoTask> mTasks;
 
         public TaskAdapter(List<ToDoTask> tasks){
-            mTasks = tasks;
+            setTasks(tasks);
         }
 
         @Override
@@ -220,7 +224,26 @@ public class TaskListFragment extends Fragment {
             return mTasks.size();
         }
 
-        public void setTasks(List<ToDoTask> tasks){mTasks = tasks;}
+        public void setTasks(List<ToDoTask> tasks){
+            List<ToDoTask> uncompleted = new ArrayList<>();
+            for(int i = 0; i < tasks.size(); ++i){
+                if(tasks.get(i).getCompleteDate().getTime() == 0){
+                    uncompleted.add(tasks.get(i));
+                }
+            }
+            mTasks = uncompleted;
+            switch(mSortSelection){
+                case 0:
+                    sortByDueDate();
+                    break;
+                case 1:
+                    sortByPriority();
+                    break;
+                case 2:
+                    sortByCategory();
+                    break;
+            }
+        }
 
         public void sortByDueDate() {
             // Sort mTasks by due date
@@ -237,7 +260,8 @@ public class TaskListFragment extends Fragment {
             Collections.sort(mTasks, new Comparator<ToDoTask>() {
                 @Override
                 public int compare(ToDoTask task1, ToDoTask task2) {
-                    return task1.getPriority() - task2.getPriority();
+                    Log.i(TAG, "" + task1.getPriority());
+                    return task2.getPriority() - task1.getPriority();
                 }
             });
         }
