@@ -80,6 +80,10 @@ public class TaskListActivity extends AppCompatActivity
                 .commit();
     }
 
+    public void showDatePickerDialog() {
+
+    }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         invalidateOptionsMenu();
