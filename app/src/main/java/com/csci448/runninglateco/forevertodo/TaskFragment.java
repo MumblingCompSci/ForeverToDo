@@ -148,7 +148,7 @@ public class TaskFragment extends Fragment {
             if (mTask.getDueDate().getMinutes() < 10) {
                 minutes = "0" + mTask.getDueDate().getMinutes();
             } else {
-                minutes = String.valueOf(mTask.getDueDate().getMinutes());
+                minutes = Integer.toString(mTask.getDueDate().getMinutes());
             }
             String tempTime = convertToStandardTime(mTask.getDueDate().getHours())
                     + ":" + minutes
@@ -175,7 +175,7 @@ public class TaskFragment extends Fragment {
                 TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                        String tempHour = String.valueOf(convertToStandardTime(hour));
+                        String tempHour = Integer.toString(convertToStandardTime(hour));
                         if (tempHour.length() < 2) {
                             tempHour = "0" + tempHour;
                         }
