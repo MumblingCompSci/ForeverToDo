@@ -224,7 +224,7 @@ public class TaskListFragment extends Fragment {
 
         public void sortByDueDate() {
             // Sort mTasks by due date
-            Collections.sort(mTasks, new Compar<ToDoTask>() {
+            Collections.sort(mTasks, new Comparator<ToDoTask>() {
                 @Override
                 public int compare(ToDoTask task1, ToDoTask task2) {
                     return task1.getDueDate().compareTo(task2.getDueDate());

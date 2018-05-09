@@ -1,19 +1,15 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,11 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
+import android.widget.TimePicker;
 
 
 import java.util.ArrayList;
@@ -61,7 +53,6 @@ public class TaskFragment extends Fragment {
 
     public interface Callbacks{
         void onTaskUpdated(ToDoTask task);
-        void showDatePickerDialog();
     }
 
     @Override
@@ -96,6 +87,7 @@ public class TaskFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_task, container, false);
@@ -105,15 +97,14 @@ public class TaskFragment extends Fragment {
 
         mDueDate = (EditText) view.findViewById(R.id.task_due_date);
         if(mTask.getDueDate().getTime() != 0){
-            mDueDate.setText(mTask.getDueDate().toString());
+
+            String tempDate = convertToMonthString(mTask.getDueDate().getMonth())
+                    + " " + mTask.getDueDate().getDate()
+                    + " " + mTask.getDueDate().getYear();
+
+            mDueDate.setText(tempDate);
         }
 
-        mDueDate.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
         //TODO: Set up date dialogue
         mDueDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,49 +114,17 @@ public class TaskFragment extends Fragment {
                 int mMonth = cal.get(Calendar.MONTH);
                 int mDate = cal.get(Calendar.DAY_OF_MONTH);
 
+                Log.d(TAG, "Setting Date picker dialog");
                 DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        String tempMonth = "";
-                        switch(year) {
-                            case 0:
-                                tempMonth = "January";
-                                break;
-                            case 1:
-                                tempMonth = "February";
-                                break;
-                            case 2:
-                                tempMonth = "March";
-                                break;
-                            case 3:
-                                tempMonth = "April";
-                                break;
-                            case 4:
-                                tempMonth = "May";
-                                break;
-                            case 5:
-                                tempMonth = "June";
-                                break;
-                            case 6:
-                                tempMonth = "July";
-                                break;
-                            case 7:
-                                tempMonth = "August";
-                                break;
-                            case 8:
-                                tempMonth = "September";
-                                break;
-                            case 9:
-                                tempMonth = "October";
-                                break;
-                            case 10:
-                                tempMonth = "November";
-                                break;
-                            case 11:
-                                tempMonth = "December";
-                                break;
-                        }
+                        String tempMonth = convertToMonthString(month);
+
                         mDueDate.setText(tempMonth + " " + day + " " + year);
+
+                        tempDate.setYear(year);
+                        tempDate.setMonth(month);
+                        tempDate.setDate(day);
                     }
                 };
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, mYear, mMonth, mDate);
@@ -174,13 +133,44 @@ public class TaskFragment extends Fragment {
         });
 
         mDueTime = (EditText) view.findViewById(R.id.task_due_time);
+        if(mTask.getDueDate().getTime() != 0){
+            String AMPM = "";
+            if (mTask.getDueDate().getHours() > 12) {
+                AMPM = "PM";
+            } else {
+                AMPM = "AM";
+            }
+            String tempTime = convertToStandardTime(mTask.getDueDate().getHours())
+                    + ":" + mTask.getDueDate().getMinutes()
+                    + AMPM;
+
+            mDueTime.setText(tempTime);
+        }
         mDueTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toastie = Toast.makeText(getContext(),
-                        "A TimePickerDialog will pull up for user to set the time with",
-                        Toast.LENGTH_SHORT);
-                toastie.show();
+                final Calendar cal = Calendar.getInstance();
+                int mHour = cal.get(Calendar.HOUR_OF_DAY);
+                int mMinute = cal.get(Calendar.MINUTE);
+
+                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                        int tempHour = convertToStandardTime(hour);
+                        String AMPM;
+                        if (hour > 12) {
+                            AMPM = "PM";
+                        } else {
+                            AMPM = "AM";
+                        }
+                        mDueTime.setText(tempHour + ":" + minute + AMPM);
+
+                        tempDate.setHours(hour);
+                        tempDate.setMinutes(minute);
+                    }
+                };
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), timeSetListener, mHour, mMinute, false);
+                timePickerDialog.show();
             }
         });
 
@@ -249,12 +239,62 @@ public class TaskFragment extends Fragment {
                 mTask.setTitle(mTaskName.getText().toString());
                 mTask.setDescription(mDescription.getText().toString());
                 if(mDueDate.getText() != null){
-                    mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                    //mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                    mTask.setDueDate(tempDate);
+
                 }
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
                 mCallbacks.onTaskUpdated(mTask);
             }
         });
         return view;
+    }
+
+    private String convertToMonthString(int month) {
+        String tempMonth = "";
+
+        switch(month) {
+            case 0:
+                tempMonth = "January";
+                break;
+            case 1:
+                tempMonth = "February";
+                break;
+            case 2:
+                tempMonth = "March";
+                break;
+            case 3:
+                tempMonth = "April";
+                break;
+            case 4:
+                tempMonth = "May";
+                break;
+            case 5:
+                tempMonth = "June";
+                break;
+            case 6:
+                tempMonth = "July";
+                break;
+            case 7:
+                tempMonth = "August";
+                break;
+            case 8:
+                tempMonth = "September";
+                break;
+            case 9:
+                tempMonth = "October";
+                break;
+            case 10:
+                tempMonth = "November";
+                break;
+            case 11:
+                tempMonth = "December";
+                break;
+        }
+        return tempMonth;
+    }
+
+    private int convertToStandardTime(int hour) {
+        return hour % 12;
     }
 }
