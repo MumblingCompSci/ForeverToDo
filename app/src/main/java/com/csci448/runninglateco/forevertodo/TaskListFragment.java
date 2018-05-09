@@ -47,6 +47,13 @@ public class TaskListFragment extends Fragment {
     }
 
     @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+
+    @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setHasOptionsMenu(true);

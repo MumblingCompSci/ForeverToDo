@@ -9,11 +9,15 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.util.UUID;
+
 import io.fabric.sdk.android.Fabric;
 
 public class TaskListActivity extends AppCompatActivity
-    implements TaskListFragment.Callbacks{
+    implements TaskListFragment.Callbacks, TaskFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
+    private static final String EXTRA_TASK_SELECTED = "task_selected";
+    private UUID mCurrentTaskId;
 
     protected Fragment createFragment() {
         return TaskListFragment.newInstance();
@@ -24,6 +28,8 @@ public class TaskListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
         Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
 
@@ -36,14 +42,20 @@ public class TaskListActivity extends AppCompatActivity
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+        else{
+
+            fragment = createFragment();
+            fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        }
     }
 
     @Override
     public void onTaskSelected(ToDoTask task){
         Log.i(TAG, "Task Clicked!");
+        mCurrentTaskId = task.getId();
         if (findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = TaskActivity.newIntent(this, task.getId());
-            startActivity(intent);
+            Fragment newDetail = TaskFragment.newInstance(task.getId());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newDetail).commit();
         } else {
             Fragment newDetail = TaskFragment.newInstance(task.getId());
             getSupportFragmentManager().beginTransaction()
@@ -51,16 +63,26 @@ public class TaskListActivity extends AppCompatActivity
                     .commit();
         }
     }
+
+    public void onTaskUpdated(ToDoTask task){
+        Fragment listFragment = createFragment();
+        mCurrentTaskId = null;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, listFragment)
+                .commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable(EXTRA_TASK_SELECTED, mCurrentTaskId);
+    }
 }
 
 //TODO: create list scrolling activity similar to the one from CriminalIntent
 //TODO: add a static "sort by" button to the scrolling page
 //TODO: add a + menu item to add a new task
 //TODO: create new ToDoTask class
-//TODO: create new TaskWithImage class that extends ToDoTask
-//TODO: create a TaskActivity to show the details of the activity
-//TODO: give TaskActivity an Edit/Done button
-//TODO: set up TaskActivity to "be a child" of TaskListActivity so that the up button takes it back
 
 //TODO: set up a landscape view for TaskListActivity that shows the list and the details like CriminalActivity did
 //TODO: implement a NavigationDrawer????

@@ -12,10 +12,6 @@
         <activity android:name=".LoginActivity">
         </activity>
         <activity
-            android:name=".TaskActivity"
-            android:parentActivityName=".TaskListActivity" >
-        </activity>
-        <activity
             android:name=".HistoryActivity"
             android:parentActivityName=".TaskListActivity" />
         <activity android:name=".TaskListActivity">

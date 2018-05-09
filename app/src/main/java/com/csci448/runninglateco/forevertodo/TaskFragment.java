@@ -46,7 +46,23 @@ public class TaskFragment extends Fragment {
     private Spinner mCategory;
     private ToDoTask mTask;
     private ArrayList<String> mCategories;
+    private Callbacks mCallbacks;
 
+    public interface Callbacks{
+        void onTaskUpdated(ToDoTask task);
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     public static TaskFragment newInstance(UUID taskId){
         Bundle args = new Bundle();
@@ -142,11 +158,15 @@ public class TaskFragment extends Fragment {
                 mTask.setDescription(mDescription.getText().toString());
                 mTask.setDueDate(new Date(mDueDate.getText().toString()));
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
-                getActivity().finish();
+                mCallbacks.onTaskUpdated(mTask);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public UUID getTaskId(){
+        return mTask.getId();
     }
 
 
