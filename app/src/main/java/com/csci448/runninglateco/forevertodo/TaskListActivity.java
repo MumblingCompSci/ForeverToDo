@@ -1,6 +1,8 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,9 +20,15 @@ import io.fabric.sdk.android.Fabric;
 public class TaskListActivity extends AppCompatActivity
     implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
-    private static final String EXTRA_TASK_SELECTED = "task_selected";
+    private static final String EXTRA_TASK_SELECTED = "task selected";
+    private static final String EXTRA_SOUND_ON = "sound on";
+    private static final String EXTRA_NOTIFICATION_ON = "notifications on";
+    private static final String EXTRA_NOTIFICATION_TIME = "notification time";
     private UUID mCurrentTaskId;
     private static int mSortingBy;
+    private boolean mSoundOn;
+    private boolean mNotificationsOn;
+    private int mNotificationTime;
 
     protected Fragment createFragment(int sortingBy) {
         return TaskListFragment.newInstance(sortingBy);
@@ -35,6 +43,12 @@ public class TaskListActivity extends AppCompatActivity
         if(savedInstanceState != null) {
             mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
         }
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        mSoundOn = sharedPref.getBoolean(EXTRA_SOUND_ON, true);
+        mNotificationsOn = sharedPref.getBoolean(EXTRA_NOTIFICATION_ON, true);
+        mNotificationTime = sharedPref.getInt(EXTRA_NOTIFICATION_TIME, 0);
+
         Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
 
@@ -54,7 +68,7 @@ public class TaskListActivity extends AppCompatActivity
                                     /*TODO : create a history page fragment that handles the two parts */
                                     break;
                                 case R.id.nav_settings:
-                                    selectedFragment = new GraphFragment();
+                                    selectedFragment = SettingsFragment.newInstance();
                                     break;
                                 default:
                                     break;
