@@ -54,15 +54,18 @@ public class TaskListActivity extends AppCompatActivity
                                     /*TODO : create a history page fragment that handles the two parts */
                                     break;
                                 case R.id.nav_settings:
-                                    selectedFragment = new GraphFragment();
+                                    /*selectedFragment = new GraphFragment();*/
                                     break;
                                 default:
                                     break;
 
                             }
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, selectedFragment)
-                                    .commit();
+
+                            if (selectedFragment != null) {
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, selectedFragment)
+                                        .commit();
+                            }
                             return true;
                         }
                     });
