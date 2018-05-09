@@ -1,9 +1,12 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,20 @@ public class CompletedFragment extends Fragment {
     private static final String TAG = "CompletedFragment";
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
+    private Callbacks mCallbacks;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
+    }
+
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
@@ -39,8 +56,8 @@ public class CompletedFragment extends Fragment {
         void onTaskSelected(ToDoTask task);
     }
 
-    public static TaskListFragment newInstance() {
-        return new TaskListFragment();
+    public static CompletedFragment newInstance() {
+        return new CompletedFragment();
     }
 
 
@@ -63,21 +80,21 @@ public class CompletedFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Log.i(TAG, "Calling onTaskSelected");
-                    ((HistoryActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
             mDateTextView.setText(mTask.getCompleteDate().toString());
             mDateTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((HistoryActivity) getActivity()).onTaskSelected(mTask);
+                    mCallbacks.onTaskSelected(mTask);
                 }
             });
         }
 
         @Override
         public void onClick(View view){
-
+            mCallbacks.onTaskSelected(mTask);
         }
 
     }

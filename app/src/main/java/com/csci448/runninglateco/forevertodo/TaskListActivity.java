@@ -16,13 +16,14 @@ import java.util.UUID;
 import io.fabric.sdk.android.Fabric;
 
 public class TaskListActivity extends AppCompatActivity
-    implements TaskListFragment.Callbacks, TaskFragment.Callbacks{
+    implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks{
     private static final String TAG = "TaskListActivity";
     private static final String EXTRA_TASK_SELECTED = "task_selected";
     private UUID mCurrentTaskId;
+    private static int mSortingBy;
 
-    protected Fragment createFragment() {
-        return TaskListFragment.newInstance(1);
+    protected Fragment createFragment(int sortingBy) {
+        return TaskListFragment.newInstance(sortingBy);
     }
 
     protected int getLayoutResId() { return R.layout.activity_masterdetail; }
@@ -46,7 +47,7 @@ public class TaskListActivity extends AppCompatActivity
                             Fragment selectedFragment = null;
                             switch (item.getItemId()) {
                                 case R.id.nav_home:
-                                    selectedFragment = TaskListFragment.newInstance(1);
+                                    selectedFragment = createFragment(mSortingBy);
                                     break;
                                 case R.id.nav_history:
                                     selectedFragment = CompletedFragment.newInstance();
@@ -72,7 +73,7 @@ public class TaskListActivity extends AppCompatActivity
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, TaskListFragment.newInstance(1))
+                .replace(R.id.fragment_container, TaskListFragment.newInstance(mSortingBy))
                 .commit();
     }
 
@@ -94,8 +95,12 @@ public class TaskListActivity extends AppCompatActivity
         }
     }
 
-    public void onTaskUpdated(ToDoTask task){
-        Fragment listFragment = createFragment();
+    public static void setSortingBy(int sortingBy){
+        mSortingBy = sortingBy;
+    }
+
+    public void onTaskUpdated(){
+        Fragment listFragment = createFragment(mSortingBy);
         mCurrentTaskId = null;
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, listFragment)
