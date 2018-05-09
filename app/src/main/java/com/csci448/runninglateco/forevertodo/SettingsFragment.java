@@ -60,6 +60,9 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                editor.putBoolean(EXTRA_NOTIFICATION_ON, b);
                editor.commit();
+                PollService.setServiceAlarm(getActivity(), true, mSharedPreferences.getBoolean(EXTRA_SOUND_ON, true),
+                        mSharedPreferences.getBoolean(EXTRA_NOTIFICATION_ON, true),
+                        mSharedPreferences.getInt(EXTRA_NOTIFICATION_TIME, 0));
             }
         });
 
@@ -70,6 +73,9 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 editor.putBoolean(EXTRA_SOUND_ON, b);
                 editor.commit();
+                PollService.setServiceAlarm(getActivity(), true, mSharedPreferences.getBoolean(EXTRA_SOUND_ON, true),
+                        mSharedPreferences.getBoolean(EXTRA_NOTIFICATION_ON, true),
+                        mSharedPreferences.getInt(EXTRA_NOTIFICATION_TIME, 0));
             }
         });
 
@@ -82,6 +88,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 editor.putInt(EXTRA_NOTIFICATION_TIME, i);
+                PollService.setServiceAlarm(getActivity(), true, mSharedPreferences.getBoolean(EXTRA_SOUND_ON, true),
+                        mSharedPreferences.getBoolean(EXTRA_NOTIFICATION_ON, true),
+                        mSharedPreferences.getInt(EXTRA_NOTIFICATION_TIME, 0));
             }
 
             @Override

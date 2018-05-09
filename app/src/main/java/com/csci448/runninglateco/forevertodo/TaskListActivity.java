@@ -27,9 +27,7 @@ public class TaskListActivity extends AppCompatActivity
     private static final String EXTRA_NOTIFICATION_TIME = "notification time";
     private UUID mCurrentTaskId;
     private static int mSortingBy;
-    private boolean mSoundOn;
-    private boolean mNotificationsOn;
-    private int mNotificationTime;
+
 
     protected Fragment createFragment(int sortingBy) {
         return TaskListFragment.newInstance(sortingBy);
@@ -39,16 +37,15 @@ public class TaskListActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        PollService.setServiceAlarm(this, true, sharedPref.getBoolean(EXTRA_SOUND_ON, true),
+                sharedPref.getBoolean(EXTRA_NOTIFICATION_ON, true),
+                sharedPref.getInt(EXTRA_NOTIFICATION_TIME, 0));
         invalidateOptionsMenu();
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null) {
             mCurrentTaskId = (UUID) savedInstanceState.getSerializable(EXTRA_TASK_SELECTED);
         }
-
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        mSoundOn = sharedPref.getBoolean(EXTRA_SOUND_ON, true);
-        mNotificationsOn = sharedPref.getBoolean(EXTRA_NOTIFICATION_ON, true);
-        mNotificationTime = sharedPref.getInt(EXTRA_NOTIFICATION_TIME, 0);
 
         Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
