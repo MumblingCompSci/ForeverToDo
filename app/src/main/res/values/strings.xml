@@ -30,9 +30,13 @@
 
     <!-- Menu Popup Items -->
     <string name="sortby">Sort By</string>
-    <string name="duedate_sort">Due Date</string>
-    <string name="priority_sort">Priority</string>
-    <string name="category_sort">Category</string>
+    <string name="select_option">Select an option</string>
+
+    <string-array name="sortby_list">
+        <item>Due Date</item>
+        <item>Priority</item>
+        <item>Category</item>
+    </string-array>
 
     <!-- Testing Strings -->
     <string name="task_list">This is the task list page!</string>

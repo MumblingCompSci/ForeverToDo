@@ -1,6 +1,8 @@
 package com.csci448.runninglateco.forevertodo;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -76,8 +80,6 @@ public class TaskListFragment extends Fragment {
             }
         });
 
-
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.task_recycler_view);
         updateUI();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -107,46 +109,45 @@ public class TaskListFragment extends Fragment {
             case R.id.sort_popup_menu:
                 // Method called to show the actual popup menu, set up this way to be a menu within the menu
                 // Hopefully it will show the "Sort by" text..
-                showPopupMenu();
+                //showPopupMenu();
 
                 Log.d(TAG, "Popup menu item selected");
+                return true;
+            case R.id.sortby:
+                Log.d(TAG, "Sort by selected");
+                // Dialog will pop up for user to choose to sort by Due Date, Priority, or Category
+                showSortByDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void showPopupMenu() {
-        PopupMenu sortMenu = new PopupMenu(getActivity(), this.getView());
+    private void showSortByDialog() {
 
-        sortMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            // This will sort the list of tasks based on which menu item user selects
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                // Menu items selection
-                // Sorting methods are in Task Adapter since that's where the list of tasks are made
-                switch (menuItem.getItemId()) {
-                    case R.id.sort_duedate:
-                        Log.d(TAG, "Sorting by due date");
-                        mTaskAdapter.sortByDueDate();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.select_option)
+                .setItems(R.array.sortby_list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int option) {
+                        switch (option) {
+                            case 0:
+                                mTaskAdapter.sortByDueDate();
+                                Log.d(TAG, "Sorting by due date");
+                                break;
+                            case 1:
+                                mTaskAdapter.sortByPriority();
+                                Log.d(TAG, "Sorting by priority");
+                                break;
+                            case 2:
+                                mTaskAdapter.sortByCategory();
+                                Log.d(TAG, "Sorting by category");
+                                break;
+                        }
+                    }
+                })
+                .show();
 
-                        return true;
-                    case R.id.sort_priority:
-                        Log.d(TAG, "Sorting by priority");
-                        mTaskAdapter.sortByPriority();
-
-                        return true;
-                    case R.id.sort_category:
-                        Log.d(TAG, "Sorting by category");
-                        mTaskAdapter.sortByCategory();
-
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        sortMenu.show();
     }
 
     public interface Callbacks {
@@ -223,14 +224,31 @@ public class TaskListFragment extends Fragment {
 
         public void sortByDueDate() {
             // Sort mTasks by due date
+            Collections.sort(mTasks, new Comparator<ToDoTask>() {
+                @Override
+                public int compare(ToDoTask task1, ToDoTask task2) {
+                    return task1.getDueDate().compareTo(task2.getDueDate());
+                }
+            });
         }
 
         public void sortByPriority() {
             // Sort mTasks by priority
+            Collections.sort(mTasks, new Comparator<ToDoTask>() {
+                @Override
+                public int compare(ToDoTask task1, ToDoTask task2) {
+                    return task1.getPriority() - task2.getPriority();
+                }
+            });
         }
 
         public void sortByCategory() {
-
+            Collections.sort(mTasks, new Comparator<ToDoTask>() {
+                @Override
+                public int compare(ToDoTask task1, ToDoTask task2) {
+                    return task1.getCategory().compareTo(task2.getCategory());
+                }
+            });
         }
     }
 
