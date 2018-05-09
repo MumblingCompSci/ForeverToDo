@@ -8,10 +8,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -132,17 +134,24 @@ public class TaskFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
+        mDueDate.setInputType(InputType.TYPE_NULL);
 
         mDueTime = (EditText) view.findViewById(R.id.task_due_time);
         if(mTask.getDueDate().getTime() != 0){
-            String AMPM = "";
+            String AMPM;
+            String minutes;
             if (mTask.getDueDate().getHours() > 12) {
                 AMPM = "PM";
             } else {
                 AMPM = "AM";
             }
+            if (mTask.getDueDate().getMinutes() < 10) {
+                minutes = "0" + mTask.getDueDate().getMinutes();
+            } else {
+                minutes = String.valueOf(mTask.getDueDate().getMinutes());
+            }
             String tempTime = convertToStandardTime(mTask.getDueDate().getHours())
-                    + ":" + mTask.getDueDate().getMinutes()
+                    + ":" + minutes
                     + AMPM;
 
             mDueTime.setText(tempTime);
@@ -151,29 +160,57 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final Calendar cal = Calendar.getInstance();
-                int mHour = cal.get(Calendar.HOUR_OF_DAY);
-                int mMinute = cal.get(Calendar.MINUTE);
+
+                // Weird as hell formatting but it's to pass the variables into Time Picker
+                int mHour;
+                int mMinute;
+                if(mTask.getDueDate().getTime() != 0) {
+                    mHour = mTask.getDueDate().getHours();
+                    mMinute = mTask.getDueDate().getMinutes();
+                } else {
+                    mHour = cal.get(Calendar.HOUR_OF_DAY);
+                    mMinute = cal.get(Calendar.MINUTE);
+                }
 
                 TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                        int tempHour = convertToStandardTime(hour);
+                        String tempHour = String.valueOf(convertToStandardTime(hour));
+                        if (tempHour.length() < 2) {
+                            tempHour = "0" + tempHour;
+                        }
+
                         String AMPM;
-                        if (hour > 12) {
+                        String minutes;
+                        if (hour >= 12) {
                             AMPM = "PM";
                         } else {
                             AMPM = "AM";
                         }
-                        mDueTime.setText(tempHour + ":" + minute + AMPM);
+                        if (minute < 10) {
+                            minutes = "0" + minute;
+                        } else {
+                            minutes = String.valueOf(minute);
+                        }
+
+                        mDueTime.setText(tempHour + ":" + minutes + AMPM);
 
                         tempDate.setHours(hour);
                         tempDate.setMinutes(minute);
                     }
                 };
+                if(tempDate.getTime() != 0) {
+                    mHour = tempDate.getHours();
+                    mMinute = tempDate.getMinutes();
+                } else {
+                    mHour = cal.get(Calendar.HOUR_OF_DAY);
+                    mMinute = cal.get(Calendar.MINUTE);
+                }
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), timeSetListener, mHour, mMinute, false);
                 timePickerDialog.show();
             }
         });
+        mDueTime.setInputType(InputType.TYPE_NULL);
 
         mDescription = (EditText) view.findViewById(R.id.task_description);
         mDescription.setText(mTask.getDescription());
@@ -304,6 +341,9 @@ public class TaskFragment extends Fragment {
     }
 
     private int convertToStandardTime(int hour) {
-        return hour % 12;
+        if (hour != 12) {
+            return hour % 12;
+        }
+        return hour;
     }
 }

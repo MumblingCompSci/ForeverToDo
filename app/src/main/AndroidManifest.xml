@@ -12,7 +12,9 @@
         <activity
             android:name=".HistoryActivity"
             android:parentActivityName=".TaskListActivity" />
-        <activity android:name=".TaskListActivity">
+        <activity
+            android:name=".TaskListActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
