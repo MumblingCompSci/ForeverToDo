@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.csci448.runninglateco.forevertodo">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +26,7 @@
             android:value="b6fead2dff288a8ce8129971ddb5c6073fc68515"
             />
 
+        <service android:name=".PollService" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

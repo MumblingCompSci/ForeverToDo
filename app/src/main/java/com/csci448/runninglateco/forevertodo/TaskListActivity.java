@@ -16,6 +16,7 @@ import com.crashlytics.android.Crashlytics;
 import java.util.UUID;
 
 import io.fabric.sdk.android.Fabric;
+import io.fabric.sdk.android.services.concurrency.Task;
 
 public class TaskListActivity extends AppCompatActivity
     implements TaskListFragment.Callbacks, TaskFragment.Callbacks, CompletedFragment.Callbacks{
@@ -130,6 +131,10 @@ public class TaskListActivity extends AppCompatActivity
         invalidateOptionsMenu();
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable(EXTRA_TASK_SELECTED, mCurrentTaskId);
+    }
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, TaskListActivity.class);
     }
 }
 
