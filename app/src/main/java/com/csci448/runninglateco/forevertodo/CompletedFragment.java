@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,19 +28,8 @@ public class CompletedFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_completed, container, false);
 
-        List<ToDoTask>tasks = new ArrayList<>();
-        Random rand = new Random();
-
-        for (int i = 0; i < 30; i++) {
-            ToDoTask task = new ToDoTask();
-            task.setTitle(Integer.toString(rand.nextInt()));
-            task.setDescription("I'm a description! :)");
-            tasks.add(task);
-        }
-        mTaskAdapter = new TaskAdapter(tasks);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.completed_recycler);
-        mRecyclerView.setAdapter(mTaskAdapter);
+        updateUI();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
@@ -48,6 +38,7 @@ public class CompletedFragment extends Fragment {
     public interface Callbacks {
         void onTaskSelected(ToDoTask task);
     }
+
     public static TaskListFragment newInstance() {
         return new TaskListFragment();
     }
@@ -95,7 +86,17 @@ public class CompletedFragment extends Fragment {
         private List<ToDoTask> mTasks;
 
         public TaskAdapter(List<ToDoTask> tasks){
-            mTasks = tasks;
+            setTasks(tasks);
+        }
+
+        public void setTasks(List<ToDoTask> tasks){
+            List<ToDoTask> completed = new ArrayList<>();
+            for(int i = 0; i < tasks.size(); ++i){
+                if(tasks.get(i).getCompleteDate().getTime() != 0){
+                    completed.add(tasks.get(i));
+                }
+            }
+            mTasks = completed;
         }
 
         @Override
@@ -113,6 +114,18 @@ public class CompletedFragment extends Fragment {
         @Override
         public int getItemCount(){
             return mTasks.size();
+        }
+    }
+
+    public void updateUI() {
+        ToDoTaskBank toDoTaskBank = ToDoTaskBank.get(getActivity());
+        List<ToDoTask> tasks = toDoTaskBank.getToDoTasks();
+        if (mTaskAdapter == null) {
+            mTaskAdapter = new TaskAdapter(tasks);
+            mRecyclerView.setAdapter(mTaskAdapter);
+        } else {
+            mTaskAdapter.setTasks(tasks);
+            mTaskAdapter.notifyDataSetChanged();
         }
     }
 

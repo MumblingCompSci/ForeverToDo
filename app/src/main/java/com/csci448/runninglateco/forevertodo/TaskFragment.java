@@ -187,8 +187,9 @@ public class TaskFragment extends Fragment {
                 mTask.setPriority(mPriorityLvl.getProgress());
                 mTask.setTitle(mTaskName.getText().toString());
                 mTask.setDescription(mDescription.getText().toString());
-                if(mDueDate.getText() != null){
-                    mTask.setDueDate(new Date(mDueDate.getText().toString()));
+                if(mDueDate.getText() != null && mDueDate.getText().toString() != ""){
+                    Log.i(TAG, "here! This is the text: " + mDueDate.getText().toString() + " end");
+                    mTask.setDueDate(new Date(0));
                 }
                 ToDoTaskBank.get(getContext()).updateTask(mTask);
                 mCallbacks.onTaskUpdated(mTask);

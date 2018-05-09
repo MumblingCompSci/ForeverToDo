@@ -180,7 +180,12 @@ public class TaskListFragment extends Fragment {
                     ((TaskListActivity) getActivity()).onTaskSelected(mTask);
                 }
             });
-            mDateTextView.setText(mTask.getCompleteDate().toString());
+            if(mTask.getDueDate().getTime() != 0){
+                mDateTextView.setText(mTask.getDueDate().toString());
+            }
+            else{
+                mDateTextView.setText("");
+            }
             mDateTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -200,7 +205,7 @@ public class TaskListFragment extends Fragment {
         private List<ToDoTask> mTasks;
 
         public TaskAdapter(List<ToDoTask> tasks){
-            mTasks = tasks;
+            setTasks(tasks);
         }
 
         @Override
@@ -220,7 +225,15 @@ public class TaskListFragment extends Fragment {
             return mTasks.size();
         }
 
-        public void setTasks(List<ToDoTask> tasks){mTasks = tasks;}
+        public void setTasks(List<ToDoTask> tasks){
+            List<ToDoTask> uncompleted = new ArrayList<>();
+            for(int i = 0; i < tasks.size(); ++i){
+                if(tasks.get(i).getCompleteDate().getTime() == 0){
+                    uncompleted.add(tasks.get(i));
+                }
+            }
+            mTasks = uncompleted;
+        }
 
         public void sortByDueDate() {
             // Sort mTasks by due date
