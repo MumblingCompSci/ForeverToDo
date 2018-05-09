@@ -1,11 +1,13 @@
 package com.csci448.runninglateco.forevertodo;
 
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -35,23 +37,43 @@ public class TaskListActivity extends AppCompatActivity
         Fabric.with(this, new Crashlytics());
         setContentView(getLayoutResId());
 
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        BottomNavigationView nav_menu = findViewById(R.id.navigationView);
+        if (nav_menu != null) {
+            nav_menu.setOnNavigationItemSelectedListener(
+                    new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(MenuItem item) {
+                            Fragment selectedFragment = null;
+                            switch (item.getItemId()) {
+                                case R.id.nav_home:
+                                    selectedFragment = TaskListFragment.newInstance();
+                                    break;
+                                case R.id.nav_history:
+                                    selectedFragment = CompletedFragment.newInstance();
+                                    /*TODO : create a history page fragment that handles the two parts */
+                                    break;
+                                case R.id.nav_settings:
+                                    selectedFragment = new GraphFragment();
+                                    break;
+                                default:
+                                    break;
 
-        if (fragment == null) {
-            fragment = createFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit();
-        }
-        else{
-            fragment = createFragment();
-            fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                            }
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, selectedFragment)
+                                    .commit();
+                            return true;
+                        }
+                    });
         }
 
         if(mCurrentTaskId != null){
             onTaskSelected(ToDoTaskBank.get(this).getToDoTask(mCurrentTaskId));
         }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, TaskListFragment.newInstance())
+                .commit();
     }
 
     @Override
