@@ -11,6 +11,13 @@
         android:id="@+id/sort_popup_menu"
         android:title="Sort By"
         android:icon="@drawable/menu_popup"
-        app:showAsAction="always"/>
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/sortby"
+                android:title="@string/sortby"/>
+        </menu>
+    </item>
+
 
 </menu>
