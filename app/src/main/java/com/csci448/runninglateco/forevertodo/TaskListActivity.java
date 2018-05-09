@@ -69,14 +69,18 @@ public class TaskListActivity extends AppCompatActivity
                                     break;
                                 case R.id.nav_settings:
                                     selectedFragment = SettingsFragment.newInstance();
+
                                     break;
                                 default:
                                     break;
 
                             }
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, selectedFragment)
-                                    .commit();
+
+                            if (selectedFragment != null) {
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, selectedFragment)
+                                        .commit();
+                            }
                             return true;
                         }
                     });
