@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HistoryActivity"
-            android:parentActivityName=".TaskListActivity" />
-        <activity
             android:name=".TaskListActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
